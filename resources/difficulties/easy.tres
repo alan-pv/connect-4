@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DifficultyPreset" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/difficulty_preset.gd" id="1_preset"]
+
+[resource]
+script = ExtResource("1_preset")
+id = &"easy"
+description = "Plays almost at random and never looks past its own move. A good way to see the board without being punished for it."
+display_name = "Easy"
+bot_think_time = 0.15
+bot_skill = 0.15

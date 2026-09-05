@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DifficultyPreset" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/difficulty_preset.gd" id="1_preset"]
+
+[resource]
+script = ExtResource("1_preset")
+id = &"hard"
+description = "Searches as deep as it is allowed and does not miss a win. Popping a column in front of it is a decision, not a reflex."
+display_name = "Hard"
+bot_think_time = 0.7
+bot_skill = 1.0
