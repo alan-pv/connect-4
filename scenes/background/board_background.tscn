@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/disc.svg" id="1_disc"]
+
+[sub_resource type="Curve" id="Curve_alpha"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.35), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
+curve = SubResource("Curve_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="PPM_red"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(700, 40, 1)
+spread = 8.0
+initial_velocity_min = 18.0
+initial_velocity_max = 46.0
+angular_velocity_min = -14.0
+angular_velocity_max = 14.0
+gravity = Vector3(0, 22, 0)
+scale_min = 0.35
+scale_max = 1.1
+color = Color(0.898, 0.282, 0.302, 1)
+alpha_curve = SubResource("CurveTexture_alpha")
+
+[sub_resource type="ParticleProcessMaterial" id="PPM_yellow"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(700, 40, 1)
+spread = 8.0
+initial_velocity_min = 14.0
+initial_velocity_max = 38.0
+angular_velocity_min = -14.0
+angular_velocity_max = 14.0
+gravity = Vector3(0, 18, 0)
+scale_min = 0.3
+scale_max = 0.95
+color = Color(0.961, 0.773, 0.094, 1)
+alpha_curve = SubResource("CurveTexture_alpha")
+
+[node name="BoardBackground" type="Node2D"]
+
+[node name="RedDiscs" type="GPUParticles2D" parent="."]
+position = Vector2(640, -60)
+amount = 14
+texture = ExtResource("1_disc")
+lifetime = 22.0
+preprocess = 22.0
+randomness = 0.6
+visibility_rect = Rect2(-800, -100, 1600, 1000)
+process_material = SubResource("PPM_red")
+
+[node name="YellowDiscs" type="GPUParticles2D" parent="."]
+position = Vector2(640, -60)
+amount = 14
+texture = ExtResource("1_disc")
+lifetime = 26.0
+preprocess = 26.0
+randomness = 0.6
+visibility_rect = Rect2(-800, -100, 1600, 1000)
+process_material = SubResource("PPM_yellow")

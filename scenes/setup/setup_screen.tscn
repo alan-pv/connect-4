@@ -1,0 +1,142 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/setup/setup_screen.gd" id="1_setup"]
+[ext_resource type="PackedScene" path="res://scenes/background/board_background.tscn" id="2_bg"]
+
+[node name="SetupScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_setup")
+
+[node name="BoardBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(620, 0)
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="RichTextLabel" parent="Center/Column"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[center][wave amp=12 freq=3][rainbow sat=0.55 val=1 freq=0.25]Set the match up"
+fit_content = true
+scroll_active = false
+
+[node name="Panel" type="PanelContainer" parent="Center/Column"]
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="Center/Column/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="OpponentRow" type="HBoxContainer" parent="Center/Column/Panel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Center/Column/Panel/Rows/OpponentRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Opponent"
+
+[node name="OpponentOption" type="OptionButton" parent="Center/Column/Panel/Rows/OpponentRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="DifficultyRow" type="HBoxContainer" parent="Center/Column/Panel/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Center/Column/Panel/Rows/DifficultyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Difficulty"
+
+[node name="DifficultyOption" type="OptionButton" parent="Center/Column/Panel/Rows/DifficultyRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="PopOutRow" type="HBoxContainer" parent="Center/Column/Panel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Center/Column/Panel/Rows/PopOutRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pop Out"
+
+[node name="PopOutToggle" type="CheckButton" parent="Center/Column/Panel/Rows/PopOutRow"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
+[node name="RoundsRow" type="HBoxContainer" parent="Center/Column/Panel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Center/Column/Panel/Rows/RoundsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Rounds to win"
+
+[node name="RoundsSlider" type="HSlider" parent="Center/Column/Panel/Rows/RoundsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 9.0
+value = 3.0
+
+[node name="RoundsValue" type="Label" parent="Center/Column/Panel/Rows/RoundsRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "3"
+horizontal_alignment = 1
+
+[node name="ErrorLabel" type="Label" parent="Center/Column"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.898, 0.282, 0.302, 1)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Center/Column"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="BackButton" type="Button" parent="Center/Column/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"RedButton"
+text = "Back"
+
+[node name="StartButton" type="Button" parent="Center/Column/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GreenButton"
+text = "Play"

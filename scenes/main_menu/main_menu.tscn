@@ -1,0 +1,175 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://scenes/background/board_background.tscn" id="2_bg"]
+[ext_resource type="Script" path="res://assets/shaders/label/rte_jump.gd" id="3_jump"]
+[ext_resource type="FontFile" path="res://assets/fonts/Daydream DEMO.otf" id="4_title_font"]
+
+[sub_resource type="RichTextEffect" id="RichTextEffect_jump"]
+script = ExtResource("3_jump")
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="BoardBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="RichTextLabel" parent="Center/Column"]
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/normal_font = ExtResource("4_title_font")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+text = "[center][jump glow=#f5c518]CONNECT 4"
+fit_content = true
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_jump")]
+
+[node name="Subtitle" type="RichTextLabel" parent="Center/Column"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center][wave amp=14 freq=3][rainbow sat=0.6 val=1 freq=0.3]drop one, or pull one out"
+fit_content = true
+scroll_active = false
+
+[node name="Spacer" type="Control" parent="Center/Column"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Center/Column"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TopRow" type="HBoxContainer" parent="Center/Column/Buttons"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayButton" type="Button" parent="Center/Column/Buttons/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GreenButton"
+text = "Local"
+
+[node name="OnlineButton" type="Button" parent="Center/Column/Buttons/TopRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"BlueButton"
+text = "Online"
+
+[node name="BottomRow" type="HBoxContainer" parent="Center/Column/Buttons"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HowToButton" type="Button" parent="Center/Column/Buttons/BottomRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"YellowButton"
+text = "How to"
+
+[node name="AudioButton" type="Button" parent="Center/Column/Buttons/BottomRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PinkButton"
+text = "Audio"
+
+[node name="QuitButton" type="Button" parent="Center/Column/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"RedButton"
+text = "Quit"
+
+[node name="HelpPanel" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="HelpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.07058824, 0.07058824, 0.07058824, 0.88)
+
+[node name="Center" type="CenterContainer" parent="HelpPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="HelpPanel/Center"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="HelpPanel/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HelpTitle" type="RichTextLabel" parent="HelpPanel/Center/Panel/VBox"]
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 28
+bbcode_enabled = true
+text = "[center][tornado radius=3 freq=2]How to play"
+fit_content = true
+scroll_active = false
+
+[node name="HelpText" type="Label" parent="HelpPanel/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
+theme_override_font_sizes/font_size = 19
+text = "Take turns dropping a disc into a column. It falls to the lowest free slot. Four of your colour in a row wins the round: across, down, or corner to corner.
+
+Turn POP OUT on and a turn can be spent the other way instead. The buttons under the board pull your own disc out of the bottom row, and everything stacked above it drops one slot. Only your own colour, and only from the bottom.
+
+That cuts both ways. A column falling into place settles six slots at once, and the four it completes might be your opponent's. Pop one into their line and they take the round. Complete a four for each of you in the same move and nobody does.
+
+Whoever wins enough rounds takes the match."
+autowrap_mode = 3
+
+[node name="CloseHelpButton" type="Button" parent="HelpPanel/Center/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"GreenButton"
+text = "Got it"

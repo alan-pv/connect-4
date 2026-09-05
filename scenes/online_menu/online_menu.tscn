@@ -1,0 +1,192 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/online_menu/online_menu.gd" id="1_online"]
+[ext_resource type="PackedScene" path="res://scenes/background/board_background.tscn" id="2_bg"]
+
+[node name="OnlineMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_online")
+
+[node name="BoardBackground" parent="." instance=ExtResource("2_bg")]
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Column" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="RichTextLabel" parent="Center/Column"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 34
+bbcode_enabled = true
+text = "[center][wave amp=12 freq=3][rainbow sat=0.55 val=1 freq=0.25]Play online"
+fit_content = true
+scroll_active = false
+
+[node name="StatusLabel" type="Label" parent="Center/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ConnectStep" type="VBoxContainer" parent="Center/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Panel" type="PanelContainer" parent="Center/Column/ConnectStep"]
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="Center/Column/ConnectStep/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Center/Column/ConnectStep/Panel/Rows"]
+layout_mode = 2
+text = "What should the other player call you?"
+
+[node name="NameField" type="LineEdit" parent="Center/Column/ConnectStep/Panel/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+max_length = 16
+placeholder_text = "Player"
+
+[node name="ConnectButton" type="Button" parent="Center/Column/ConnectStep"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+theme_type_variation = &"GreenButton"
+text = "Next"
+
+[node name="RoomsStep" type="VBoxContainer" parent="Center/Column"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="IdentityRow" type="HBoxContainer" parent="Center/Column/RoomsStep"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="IdentityLabel" type="Label" parent="Center/Column/RoomsStep/IdentityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
+text = "as Player"
+
+[node name="ChangeNameButton" type="Button" parent="Center/Column/RoomsStep/IdentityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Change name"
+
+[node name="RefreshButton" type="Button" parent="Center/Column/RoomsStep/IdentityRow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_type_variation = &"BlueButton"
+text = "Refresh"
+
+[node name="RoomsPanel" type="PanelContainer" parent="Center/Column/RoomsStep"]
+custom_minimum_size = Vector2(0, 230)
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Center/Column/RoomsStep/RoomsPanel"]
+layout_mode = 2
+
+[node name="RoomList" type="VBoxContainer" parent="Center/Column/RoomsStep/RoomsPanel/Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="JoinPanel" type="PanelContainer" parent="Center/Column/RoomsStep"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Rows" type="VBoxContainer" parent="Center/Column/RoomsStep/JoinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="JoinLabel" type="Label" parent="Center/Column/RoomsStep/JoinPanel/Rows"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Password"
+
+[node name="JoinPasswordField" type="LineEdit" parent="Center/Column/RoomsStep/JoinPanel/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+secret = true
+
+[node name="Buttons" type="HBoxContainer" parent="Center/Column/RoomsStep/JoinPanel/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="JoinCancelButton" type="Button" parent="Center/Column/RoomsStep/JoinPanel/Rows/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"RedButton"
+text = "Cancel"
+
+[node name="JoinConfirmButton" type="Button" parent="Center/Column/RoomsStep/JoinPanel/Rows/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"GreenButton"
+text = "Join"
+
+[node name="CreatePanel" type="PanelContainer" parent="Center/Column/RoomsStep"]
+layout_mode = 2
+
+[node name="Row" type="HBoxContainer" parent="Center/Column/RoomsStep/CreatePanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="RoomNameField" type="LineEdit" parent="Center/Column/RoomsStep/CreatePanel/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+max_length = 24
+placeholder_text = "Room name"
+
+[node name="RoomPasswordField" type="LineEdit" parent="Center/Column/RoomsStep/CreatePanel/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 44)
+layout_mode = 2
+secret = true
+placeholder_text = "Password (optional)"
+
+[node name="CreateButton" type="Button" parent="Center/Column/RoomsStep/CreatePanel/Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+theme_type_variation = &"GreenButton"
+text = "Create"
+
+[node name="BackButton" type="Button" parent="Center/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_type_variation = &"RedButton"
+text = "Back"

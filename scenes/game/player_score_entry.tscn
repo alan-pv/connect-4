@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/game/player_score_entry.gd" id="1_entry"]
+
+[node name="PlayerScoreEntry" type="PanelContainer"]
+custom_minimum_size = Vector2(190, 0)
+script = ExtResource("1_entry")
+
+[node name="Row" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Swatch" type="Panel" parent="Row"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NameLabel" type="Label" parent="Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Player"
+text_overrun_behavior = 3
+
+[node name="ScoreLabel" type="Label" parent="Row"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "0"
