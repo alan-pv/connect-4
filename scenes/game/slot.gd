@@ -17,14 +17,14 @@ extends Control
 ##   %Disc      what colour it is and how big, which is how landing is drawn
 
 
-const COLOR_RED := Color("e5484d")
-const COLOR_YELLOW := Color("f5c518")
+const COLOR_RED := Color("f44336")
+const COLOR_YELLOW := Color("ffc107")
 
 ## The hole with nothing in it: the same colour as the screen behind the board.
-const COLOR_EMPTY := Color("121212")
+const COLOR_EMPTY := Color("2196f3")
 
 ## The sheet the holes are punched in.
-const COLOR_BOARD := Color("24306b")
+const COLOR_BOARD := Color("0176d3")
 
 ## A disc that is part of a line that just won.
 const COLOR_WIN_RING := Color("ffffff")

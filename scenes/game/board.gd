@@ -23,7 +23,7 @@ extends VBoxContainer
 signal move_requested(code: int)
 
 const SLOT_SIZE := 72
-const SEPARATION := 6
+const SEPARATION := 0
 const BUTTON_HEIGHT := 42
 
 ## Buttons point the way the disc travels.

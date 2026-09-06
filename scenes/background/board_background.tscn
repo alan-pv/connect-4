@@ -1,64 +1,121 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://dobd4mijsy8a4"]
 
-[ext_resource type="Texture2D" path="res://assets/sprites/disc.svg" id="1_disc"]
+[ext_resource type="Texture2D" uid="uid://mt8lslfo6i6y" path="res://assets/sprites/disc.svg" id="1_disc"]
+[ext_resource type="Shader" uid="uid://bcxlntg525ioy" path="res://assets/shaders/background.gdshader" id="2_2kidc"]
+[ext_resource type="Texture2D" uid="uid://d2uc5o4etxjbr" path="res://assets/sprites/background.svg" id="3_f68wu"]
 
-[sub_resource type="Curve" id="Curve_alpha"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.35), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_88qey"]
+shader = ExtResource("2_2kidc")
+shader_parameter/speed = 0.1
+
+[sub_resource type="Curve" id="Curve_2kidc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.75229365, 0.9101124), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_alpha"]
-curve = SubResource("Curve_alpha")
+[sub_resource type="CurveTexture" id="CurveTexture_f68wu"]
+curve = SubResource("Curve_2kidc")
+
+[sub_resource type="Curve" id="Curve_f68wu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7191012), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_88qey"]
+curve = SubResource("Curve_f68wu")
 
 [sub_resource type="ParticleProcessMaterial" id="PPM_red"]
 lifetime_randomness = 0.3
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -50, 0)
 emission_shape = 3
 emission_box_extents = Vector3(700, 40, 1)
-spread = 8.0
-initial_velocity_min = 18.0
-initial_velocity_max = 46.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
 angular_velocity_min = -14.0
 angular_velocity_max = 14.0
-gravity = Vector3(0, 22, 0)
-scale_min = 0.35
-scale_max = 1.1
-color = Color(0.898, 0.282, 0.302, 1)
-alpha_curve = SubResource("CurveTexture_alpha")
+gravity = Vector3(0, 100, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = 99.99999
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_88qey")
+color = Color(0.95686275, 0.2627451, 0.21176471, 1)
+alpha_curve = SubResource("CurveTexture_f68wu")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.5
+collision_use_scale = true
 
-[sub_resource type="ParticleProcessMaterial" id="PPM_yellow"]
+[sub_resource type="Curve" id="Curve_88qey"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.75229365, 0.9101124), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_t5276"]
+curve = SubResource("Curve_88qey")
+
+[sub_resource type="Curve" id="Curve_hj4dn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.7191012), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eea4s"]
+curve = SubResource("Curve_hj4dn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yxxxt"]
 lifetime_randomness = 0.3
 particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -50, 0)
 emission_shape = 3
 emission_box_extents = Vector3(700, 40, 1)
-spread = 8.0
-initial_velocity_min = 14.0
-initial_velocity_max = 38.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
 angular_velocity_min = -14.0
 angular_velocity_max = 14.0
-gravity = Vector3(0, 18, 0)
-scale_min = 0.3
-scale_max = 0.95
-color = Color(0.961, 0.773, 0.094, 1)
-alpha_curve = SubResource("CurveTexture_alpha")
+gravity = Vector3(0, 100, 0)
+linear_accel_min = -2.2351742e-06
+linear_accel_max = 99.99999
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_eea4s")
+color = Color(1, 0.75686276, 0.02745098, 1)
+alpha_curve = SubResource("CurveTexture_t5276")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.5
+collision_use_scale = true
 
-[node name="BoardBackground" type="Node2D"]
+[node name="BoardBackground" type="Node2D" unique_id=1288605861]
 
-[node name="RedDiscs" type="GPUParticles2D" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=822158208]
+modulate = Color(0.006955856, 0.50943613, 0.9065821, 1)
+texture_filter = 2
+material = SubResource("ShaderMaterial_88qey")
+custom_minimum_size = Vector2(1280, 720)
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("3_f68wu")
+stretch_mode = 1
+
+[node name="RedDiscs" type="GPUParticles2D" parent="." unique_id=615317067]
+texture_filter = 6
 position = Vector2(640, -60)
-amount = 14
+amount = 20
 texture = ExtResource("1_disc")
-lifetime = 22.0
+lifetime = 20.0
 preprocess = 22.0
 randomness = 0.6
 visibility_rect = Rect2(-800, -100, 1600, 1000)
 process_material = SubResource("PPM_red")
 
-[node name="YellowDiscs" type="GPUParticles2D" parent="."]
+[node name="RedDiscs2" type="GPUParticles2D" parent="." unique_id=1351150170]
+texture_filter = 6
 position = Vector2(640, -60)
-amount = 14
+amount = 20
 texture = ExtResource("1_disc")
-lifetime = 26.0
-preprocess = 26.0
+lifetime = 20.0
+preprocess = 22.0
 randomness = 0.6
 visibility_rect = Rect2(-800, -100, 1600, 1000)
-process_material = SubResource("PPM_yellow")
+process_material = SubResource("ParticleProcessMaterial_yxxxt")

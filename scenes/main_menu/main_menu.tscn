@@ -1,14 +1,20 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://boi2t2ooxhoqk"]
 
-[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_menu"]
-[ext_resource type="PackedScene" path="res://scenes/background/board_background.tscn" id="2_bg"]
-[ext_resource type="Script" path="res://assets/shaders/label/rte_jump.gd" id="3_jump"]
-[ext_resource type="FontFile" path="res://assets/fonts/Daydream DEMO.otf" id="4_title_font"]
+[ext_resource type="Script" uid="uid://bxvxu5a1575y8" path="res://scenes/main_menu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" uid="uid://dobd4mijsy8a4" path="res://scenes/background/board_background.tscn" id="2_bg"]
+[ext_resource type="Script" uid="uid://dk8l1vy10l2m6" path="res://assets/shaders/label/rte_jump.gd" id="3_jump"]
+[ext_resource type="FontFile" uid="uid://c3p1i732xtgpr" path="res://assets/fonts/Chewy-Regular.ttf" id="3_uqeha"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uqeha"]
+polygon = PackedVector2Array(386, 204, 895, 217, 893, 280, 390, 280)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wem23"]
+polygon = PackedVector2Array(422, 367, 867, 367, 791, 538, 493, 537)
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_jump"]
 script = ExtResource("3_jump")
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=190489665]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,9 +23,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
 
-[node name="BoardBackground" parent="." instance=ExtResource("2_bg")]
+[node name="BoardBackground" parent="." unique_id=1939297406 instance=ExtResource("2_bg")]
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=2081527295]
+occluder = SubResource("OccluderPolygon2D_uqeha")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="." unique_id=593243653]
+occluder = SubResource("OccluderPolygon2D_wem23")
+
+[node name="Center" type="CenterContainer" parent="." unique_id=1880228167]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,27 +40,55 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Column" type="VBoxContainer" parent="Center"]
+[node name="Column" type="VBoxContainer" parent="Center" unique_id=2077371284]
 custom_minimum_size = Vector2(560, 0)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="RichTextLabel" parent="Center/Column"]
-custom_minimum_size = Vector2(0, 92)
+[node name="Control" type="Control" parent="Center/Column" unique_id=1089594292]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="Center/Column/Control" unique_id=1715482763]
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 0
+offset_top = 8.0
+offset_right = 560.0
+offset_bottom = 100.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 8
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
-theme_override_constants/shadow_outline_size = 8
-theme_override_fonts/normal_font = ExtResource("4_title_font")
-theme_override_font_sizes/normal_font_size = 56
+theme_override_fonts/normal_font = ExtResource("3_uqeha")
+theme_override_font_sizes/normal_font_size = 96
 bbcode_enabled = true
-text = "[center][jump glow=#f5c518]CONNECT 4"
+text = "[center][jump glow=#f5c518]CONNECT"
 fit_content = true
 scroll_active = false
 custom_effects = [SubResource("RichTextEffect_jump")]
 
-[node name="Subtitle" type="RichTextLabel" parent="Center/Column"]
+[node name="Title2" type="RichTextLabel" parent="Center/Column/Control" unique_id=1083265022]
+modulate = Color(0.95686275, 0.2627451, 0.21176471, 1)
+custom_minimum_size = Vector2(0, 92)
+layout_mode = 0
+offset_left = 207.0
+offset_top = -177.0
+offset_right = 767.0
+offset_bottom = 152.0
+rotation = 0.09599311
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 8
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_fonts/normal_font = ExtResource("3_uqeha")
+theme_override_font_sizes/normal_font_size = 256
+bbcode_enabled = true
+text = "[center][jump glow=#f44336]4"
+fit_content = true
+scroll_active = false
+custom_effects = [SubResource("RichTextEffect_jump")]
+
+[node name="Subtitle" type="RichTextLabel" parent="Center/Column" unique_id=1275300534]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 22
@@ -57,60 +97,64 @@ text = "[center][wave amp=14 freq=3][rainbow sat=0.6 val=1 freq=0.3]drop one, or
 fit_content = true
 scroll_active = false
 
-[node name="Spacer" type="Control" parent="Center/Column"]
+[node name="Spacer" type="Control" parent="Center/Column" unique_id=2061280419]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Buttons" type="VBoxContainer" parent="Center/Column"]
+[node name="Buttons" type="VBoxContainer" parent="Center/Column" unique_id=1365402692]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TopRow" type="HBoxContainer" parent="Center/Column/Buttons"]
+[node name="TopRow" type="HBoxContainer" parent="Center/Column/Buttons" unique_id=1603276325]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="PlayButton" type="Button" parent="Center/Column/Buttons/TopRow"]
+[node name="PlayButton" type="Button" parent="Center/Column/Buttons/TopRow" unique_id=242169274]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(200, 64)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"GreenButton"
 text = "Local"
 
-[node name="OnlineButton" type="Button" parent="Center/Column/Buttons/TopRow"]
+[node name="OnlineButton" type="Button" parent="Center/Column/Buttons/TopRow" unique_id=849481193]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 64)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_type_variation = &"BlueButton"
-text = "Online"
-
-[node name="BottomRow" type="HBoxContainer" parent="Center/Column/Buttons"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="HowToButton" type="Button" parent="Center/Column/Buttons/BottomRow"]
-unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 64)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"YellowButton"
-text = "How to"
+text = "Online"
 
-[node name="AudioButton" type="Button" parent="Center/Column/Buttons/BottomRow"]
+[node name="BottomRow" type="HBoxContainer" parent="Center/Column/Buttons" unique_id=2146871955]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="HowToButton" type="Button" parent="Center/Column/Buttons/BottomRow" unique_id=535944130]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_type_variation = &"PinkButton"
+text = "How to"
+
+[node name="AudioButton" type="Button" parent="Center/Column/Buttons/BottomRow" unique_id=1915064431]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Audio"
 
-[node name="QuitButton" type="Button" parent="Center/Column/Buttons"]
+[node name="QuitButton" type="Button" parent="Center/Column/Buttons" unique_id=1387946729]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_type_variation = &"RedButton"
 text = "Quit"
 
-[node name="HelpPanel" type="Control" parent="."]
+[node name="HelpPanel" type="Control" parent="." unique_id=201538888]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -120,7 +164,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Dim" type="ColorRect" parent="HelpPanel"]
+[node name="Dim" type="ColorRect" parent="HelpPanel" unique_id=590679319]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,7 +173,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.07058824, 0.07058824, 0.07058824, 0.88)
 
-[node name="Center" type="CenterContainer" parent="HelpPanel"]
+[node name="Center" type="CenterContainer" parent="HelpPanel" unique_id=1735047979]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -138,15 +182,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="HelpPanel/Center"]
+[node name="Panel" type="PanelContainer" parent="HelpPanel/Center" unique_id=638730370]
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="HelpPanel/Center/Panel"]
+[node name="VBox" type="VBoxContainer" parent="HelpPanel/Center/Panel" unique_id=369414785]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="HelpTitle" type="RichTextLabel" parent="HelpPanel/Center/Panel/VBox"]
+[node name="HelpTitle" type="RichTextLabel" parent="HelpPanel/Center/Panel/VBox" unique_id=605359935]
 custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 28
@@ -155,7 +199,7 @@ text = "[center][tornado radius=3 freq=2]How to play"
 fit_content = true
 scroll_active = false
 
-[node name="HelpText" type="Label" parent="HelpPanel/Center/Panel/VBox"]
+[node name="HelpText" type="Label" parent="HelpPanel/Center/Panel/VBox" unique_id=765714577]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
 theme_override_font_sizes/font_size = 19
@@ -168,7 +212,7 @@ That cuts both ways. A column falling into place settles six slots at once, and 
 Whoever wins enough rounds takes the match."
 autowrap_mode = 3
 
-[node name="CloseHelpButton" type="Button" parent="HelpPanel/Center/Panel/VBox"]
+[node name="CloseHelpButton" type="Button" parent="HelpPanel/Center/Panel/VBox" unique_id=1309448941]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"GreenButton"

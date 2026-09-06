@@ -13,7 +13,7 @@ const IRIS_SHADER := preload("res://assets/shaders/iris.gdshader")
 const CLOSE_TIME := 0.5
 const OPEN_TIME := 0.5
 const SOFTNESS := 0.005
-const IRIS_COLOR := Color("121212")
+const IRIS_COLOR := Color("2196f3")
 
 signal transition_started(target_path: String)
 signal transition_finished(target_path: String)

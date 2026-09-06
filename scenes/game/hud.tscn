@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://38xd1pcuml7u"]
 
-[ext_resource type="Script" path="res://scenes/game/hud.gd" id="1_hud"]
+[ext_resource type="Script" uid="uid://cchwkp5mhyt3y" path="res://scenes/game/hud.gd" id="1_hud"]
 
-[node name="HUD" type="Control"]
+[node name="HUD" type="Control" unique_id=2086101344]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_hud")
 
-[node name="TopBar" type="MarginContainer" parent="."]
+[node name="TopBar" type="MarginContainer" parent="." unique_id=1164426595]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -22,50 +22,51 @@ theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 24
 
-[node name="Row" type="HBoxContainer" parent="TopBar"]
+[node name="Row" type="HBoxContainer" parent="TopBar" unique_id=1134371815]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 16
 
-[node name="ScoreContainer" type="HBoxContainer" parent="TopBar/Row"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/separation = 12
-
-[node name="Middle" type="VBoxContainer" parent="TopBar/Row"]
+[node name="Middle" type="VBoxContainer" parent="TopBar/Row" unique_id=527176754]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="RoundLabel" type="Label" parent="TopBar/Row/Middle"]
+[node name="RoundLabel" type="Label" parent="TopBar/Row/Middle" unique_id=1669161155]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Round 1  -  first to 3"
-horizontal_alignment = 1
 
-[node name="ModeLabel" type="RichTextLabel" parent="TopBar/Row/Middle"]
+[node name="ModeLabel" type="RichTextLabel" parent="TopBar/Row/Middle" unique_id=1364255347]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 34)
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[wave amp=18 freq=4][rainbow sat=0.5 val=1 freq=0.4]Pop Out"
 fit_content = true
 scroll_active = false
-horizontal_alignment = 1
 
-[node name="PauseButton" type="Button" parent="TopBar/Row"]
+[node name="ScoreContainer" type="HBoxContainer" parent="TopBar/Row" unique_id=843902430]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="PauseButton" type="Button" parent="TopBar/Row" unique_id=1158490321]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+size_flags_horizontal = 10
 size_flags_vertical = 4
 theme_type_variation = &"BlueButton"
 text = "Pause"
 
-[node name="MessageLabel" type="Label" parent="."]
+[node name="MessageLabel" type="Label" parent="." unique_id=379622279]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -79,7 +80,6 @@ offset_right = 420.0
 offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
 theme_override_font_sizes/font_size = 34

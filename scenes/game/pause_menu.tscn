@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://m8a0bw0lsger"]
 
-[ext_resource type="Script" path="res://scenes/game/pause_menu.gd" id="1_pause"]
+[ext_resource type="Script" uid="uid://0rqiy8vxfryr" path="res://scenes/game/pause_menu.gd" id="1_pause"]
 
-[node name="PauseMenu" type="Control"]
+[node name="PauseMenu" type="Control" unique_id=1137968856]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pause")
 
-[node name="Dim" type="ColorRect" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=924959436]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.07058824, 0.07058824, 0.07058824, 0.85)
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="." unique_id=229059443]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,42 +29,47 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Panel" type="PanelContainer" parent="Center"]
+[node name="Panel" type="PanelContainer" parent="Center" unique_id=414871930]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="Center/Panel"]
+[node name="VBox" type="VBoxContainer" parent="Center/Panel" unique_id=427370531]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="RichTextLabel" parent="Center/Panel/VBox"]
+[node name="Title" type="RichTextLabel" parent="Center/Panel/VBox" unique_id=782114282]
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 34
 bbcode_enabled = true
-text = "[center][pulse freq=1.0 color=#ffffff40]Paused"
+text = "[center][pulse freq=0.5 color=#ffffff40]Paused"
 fit_content = true
 scroll_active = false
 
-[node name="ResumeButton" type="Button" parent="Center/Panel/VBox"]
+[node name="ResumeButton" type="Button" parent="Center/Panel/VBox" unique_id=1635012390]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 theme_type_variation = &"GreenButton"
 text = "Resume"
 
-[node name="RestartButton" type="Button" parent="Center/Panel/VBox"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="Center/Panel/VBox" unique_id=274417272]
 layout_mode = 2
-text = "Restart the match"
 
-[node name="AudioButton" type="Button" parent="Center/Panel/VBox"]
+[node name="RestartButton" type="Button" parent="Center/Panel/VBox/HBoxContainer" unique_id=1485760356]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart "
+
+[node name="AudioButton" type="Button" parent="Center/Panel/VBox/HBoxContainer" unique_id=1741318645]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 theme_type_variation = &"BlueButton"
 text = "Audio"
 
-[node name="QuitButton" type="Button" parent="Center/Panel/VBox"]
+[node name="QuitButton" type="Button" parent="Center/Panel/VBox" unique_id=1803109088]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"RedButton"

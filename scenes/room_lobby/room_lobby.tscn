@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://dg7xm1epmywvv"]
 
-[ext_resource type="Script" path="res://scenes/room_lobby/room_lobby.gd" id="1_lobby"]
-[ext_resource type="PackedScene" path="res://scenes/background/board_background.tscn" id="2_bg"]
+[ext_resource type="Script" uid="uid://yo1ilchc76l8" path="res://scenes/room_lobby/room_lobby.gd" id="1_lobby"]
+[ext_resource type="PackedScene" uid="uid://dobd4mijsy8a4" path="res://scenes/background/board_background.tscn" id="2_bg"]
 
-[node name="RoomLobby" type="Control"]
+[node name="RoomLobby" type="Control" unique_id=295592615]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,9 +12,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lobby")
 
-[node name="BoardBackground" parent="." instance=ExtResource("2_bg")]
+[node name="BoardBackground" parent="." unique_id=907643635 instance=ExtResource("2_bg")]
 
-[node name="Center" type="CenterContainer" parent="."]
+[node name="Center" type="CenterContainer" parent="." unique_id=1908287152]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,12 +23,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Column" type="VBoxContainer" parent="Center"]
+[node name="Column" type="VBoxContainer" parent="Center" unique_id=1501067219]
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Heading" type="RichTextLabel" parent="Center/Column"]
+[node name="Heading" type="RichTextLabel" parent="Center/Column" unique_id=921046031]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 24
@@ -37,11 +37,11 @@ text = "[center][wave amp=10 freq=2.5][rainbow sat=0.5 val=1 freq=0.25]Waiting r
 fit_content = true
 scroll_active = false
 
-[node name="TitleRow" type="HBoxContainer" parent="Center/Column"]
+[node name="TitleRow" type="HBoxContainer" parent="Center/Column" unique_id=2003462071]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Center/Column/TitleRow"]
+[node name="Title" type="Label" parent="Center/Column/TitleRow" unique_id=1923626728]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -49,57 +49,54 @@ theme_override_font_sizes/font_size = 30
 text = "Room"
 text_overrun_behavior = 3
 
-[node name="CodeLabel" type="Label" parent="Center/Column/TitleRow"]
+[node name="CodeLabel" type="Label" parent="Center/Column/TitleRow" unique_id=1778820341]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 4
 theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
 text = "Code ----"
 
-[node name="SeatPanel" type="PanelContainer" parent="Center/Column"]
+[node name="SeatPanel" type="PanelContainer" parent="Center/Column" unique_id=1248052496]
 layout_mode = 2
 
-[node name="SeatList" type="VBoxContainer" parent="Center/Column/SeatPanel"]
+[node name="SeatList" type="VBoxContainer" parent="Center/Column/SeatPanel" unique_id=1847140068]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="HostBox" type="VBoxContainer" parent="Center/Column"]
+[node name="HostBox" type="VBoxContainer" parent="Center/Column" unique_id=1969477744]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Panel" type="PanelContainer" parent="Center/Column/HostBox"]
+[node name="Panel" type="PanelContainer" parent="Center/Column/HostBox" unique_id=1410211975]
 layout_mode = 2
 
-[node name="Rows" type="VBoxContainer" parent="Center/Column/HostBox/Panel"]
+[node name="Rows" type="VBoxContainer" parent="Center/Column/HostBox/Panel" unique_id=229457858]
 layout_mode = 2
 theme_override_constants/separation = 14
 
-[node name="PopOutRow" type="HBoxContainer" parent="Center/Column/HostBox/Panel/Rows"]
+[node name="PopOutRow" type="HBoxContainer" parent="Center/Column/HostBox/Panel/Rows" unique_id=2076783690]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="Center/Column/HostBox/Panel/Rows/PopOutRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Pop Out"
-
-[node name="PopOutToggle" type="CheckButton" parent="Center/Column/HostBox/Panel/Rows/PopOutRow"]
+[node name="PopOutToggle" type="CheckButton" parent="Center/Column/HostBox/Panel/Rows/PopOutRow" unique_id=2128264394]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 button_pressed = true
+text = "Pop Out"
+alignment = 1
 
-[node name="RoundsRow" type="HBoxContainer" parent="Center/Column/HostBox/Panel/Rows"]
+[node name="RoundsRow" type="HBoxContainer" parent="Center/Column/HostBox/Panel/Rows" unique_id=1172529134]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Label" type="Label" parent="Center/Column/HostBox/Panel/Rows/RoundsRow"]
+[node name="Label" type="Label" parent="Center/Column/HostBox/Panel/Rows/RoundsRow" unique_id=1969719665]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Rounds to win"
 
-[node name="RoundsSpin" type="SpinBox" parent="Center/Column/HostBox/Panel/Rows/RoundsRow"]
+[node name="RoundsSpin" type="SpinBox" parent="Center/Column/HostBox/Panel/Rows/RoundsRow" unique_id=131918104]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
@@ -107,25 +104,11 @@ min_value = 1.0
 max_value = 9.0
 value = 3.0
 
-[node name="SummaryLabel" type="Label" parent="Center/Column"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
-horizontal_alignment = 1
-
-[node name="StatusLabel" type="Label" parent="Center/Column"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
-theme_override_font_sizes/font_size = 17
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="Buttons" type="HBoxContainer" parent="Center/Column"]
+[node name="Buttons" type="HBoxContainer" parent="Center/Column/HostBox/Panel/Rows" unique_id=1483170670]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="LeaveButton" type="Button" parent="Center/Column/Buttons"]
+[node name="LeaveButton" type="Button" parent="Center/Column/HostBox/Panel/Rows/Buttons" unique_id=220440751]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
@@ -133,7 +116,7 @@ size_flags_horizontal = 3
 theme_type_variation = &"RedButton"
 text = "Leave"
 
-[node name="ReadyButton" type="Button" parent="Center/Column/Buttons"]
+[node name="ReadyButton" type="Button" parent="Center/Column/HostBox/Panel/Rows/Buttons" unique_id=1384876481]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
@@ -141,10 +124,24 @@ size_flags_horizontal = 3
 toggle_mode = true
 text = "Ready"
 
-[node name="StartButton" type="Button" parent="Center/Column/Buttons"]
+[node name="StartButton" type="Button" parent="Center/Column/HostBox/Panel/Rows/Buttons" unique_id=190181289]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"GreenButton"
 text = "Start"
+
+[node name="SummaryLabel" type="Label" parent="Center/Column" unique_id=884142156]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Center/Column" unique_id=1200308306]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+autowrap_mode = 3

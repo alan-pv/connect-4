@@ -1,26 +1,28 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://c0hyu1eawj6ht"]
 
-[ext_resource type="Script" path="res://scenes/game/board.gd" id="1_board"]
+[ext_resource type="Script" uid="uid://kio77uvwcorl" path="res://scenes/game/board.gd" id="1_board"]
 
-[node name="Board" type="VBoxContainer"]
+[node name="Board" type="VBoxContainer" unique_id=2101783582]
 theme_override_constants/separation = 8
 script = ExtResource("1_board")
 
-[node name="DropRow" type="HBoxContainer" parent="."]
+[node name="DropRow" type="HBoxContainer" parent="." unique_id=1288825607]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="Frame" type="MarginContainer" parent="."]
+[node name="Frame" type="MarginContainer" parent="." unique_id=570396815]
 clip_contents = true
 layout_mode = 2
 
-[node name="Grid" type="GridContainer" parent="Frame"]
+[node name="Grid" type="GridContainer" parent="Frame" unique_id=1656838457]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 columns = 7
 
-[node name="PopRow" type="HBoxContainer" parent="."]
+[node name="PopRow" type="HBoxContainer" parent="." unique_id=6079217]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1

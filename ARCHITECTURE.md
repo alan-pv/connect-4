@@ -30,12 +30,12 @@ The rules that hold it together:
 ```
 autoloads/    audio_manager   scene_switcher   ui_intro   ui_sounds   game_settings
 core/         disc  move  board_state  game_rules  move_result  game_state
-              game_config  difficulty_preset
+			  game_config  difficulty_preset
 players/      player  human_player  bot_player  net_player
 net/          net_protocol  net_client  room_client  room_chat  net_settings
-              online_match
+			  online_match
 scenes/       main_menu  setup  game  results  online_menu  room_lobby
-              common (chat_panel, chat_dock, audio_settings)  background
+			  common (chat_panel, chat_dock, audio_settings)  background
 resources/    themes  audio (bus layout)  difficulties (.tres)
 assets/       audio  fonts  shaders (iris, RichTextEffects)  sprites
 tests/        mini_test (~40 lines) + one suite per core file
@@ -80,13 +80,13 @@ why `height_of()` can simply count.
 
 ```
   game.gd     board.show_moves(state)          only the legal buttons light up
-              player.request_pick(state)       deferred, or the await would miss it
+			  player.request_pick(state)       deferred, or the await would miss it
   player      picked(code)                     a click, a bot, or a confirm
   game.gd     state.play(code) -> MoveResult   the only place rules are applied
-              board.drop(result)               awaited
-              or board.pop(result)             awaited
-              result.ends_round()?             win / own goal / shared / draw
-              hud.set_turn(...)                and round again
+			  board.drop(result)               awaited
+			  or board.pop(result)             awaited
+			  result.ends_round()?             win / own goal / shared / draw
+			  hud.set_turn(...)                and round again
 ```
 
 Online it is the identical loop. A `NetPlayer` answers `picked()` with a move

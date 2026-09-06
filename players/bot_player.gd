@@ -124,9 +124,29 @@ func cancel_pick() -> void:
 ##   randf()                                 a float from 0.0 to 1.0
 ##   -INF                                    smaller than any real score
 func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
-	# TODO(you) — mission 1. Until then: a legal move, chosen with no thought.
 	var moves := GameState.moves_for(board, my_disc, pop_out)
-	return moves.pick_random() if not moves.is_empty() else -1
+	if moves.is_empty():
+		return -1
+	
+	if randf() < skill:
+		return -1
+	
+	var value := -INF
+	var best_move := -1
+	moves.shuffle()
+	for move in moves:
+		var new_board := board.clone()
+		var new_move := Move.from_code(move)
+		if new_move.is_drop():
+			new_board.drop(move, my_disc)
+		if new_move.is_pop():
+			new_board.pop(move, my_disc)
+		var new_value := _search(new_board, my_disc, 0, MAX_DEPTH, skill, 0.0) #FIX
+		if new_value > value:
+			value = new_value
+			best_move = move
+	
+	return best_move ## moves.pick_random() if not moves.is_empty() else -1
 
 
 # ===========================================================================
@@ -172,8 +192,7 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 ##   maxf(a, b) / minf(a, b)         float max and min
 ##   INF and -INF                    the starting values for alpha and beta
 func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float) -> float:
-	# TODO(you) — mission 2. Until then every position looks the same, which is
-	# why mission 1 on its own still plays like a coin toss.
+	
 	return 0.0
 
 

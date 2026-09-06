@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mt8lslfo6i6y"
-path="res://.godot/imported/disc.svg-c853bd3301567bc6b7183b1701952032.ctex"
+uid="uid://d2uc5o4etxjbr"
+path="res://.godot/imported/background.svg-a11594dcf3e3e256c3b47bc743a2cb91.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/disc.svg"
-dest_files=["res://.godot/imported/disc.svg-c853bd3301567bc6b7183b1701952032.ctex"]
+source_file="res://assets/sprites/background.svg"
+dest_files=["res://.godot/imported/background.svg-a11594dcf3e3e256c3b47bc743a2cb91.ctex"]
 
 [params]
 
@@ -22,8 +22,8 @@ compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
-compress/channel_pack=1
-mipmaps/generate=true
+compress/channel_pack=0
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,6 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=2.0
+svg/scale=1.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false
