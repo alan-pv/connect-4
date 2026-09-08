@@ -192,6 +192,38 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 ##   maxf(a, b) / minf(a, b)         float max and min
 ##   INF and -INF                    the starting values for alpha and beta
 func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float) -> float:
+	var opponent := Disc.opponent(me)
+	var i_win := GameRules.has_won(board, me)
+	var opp_win := GameRules.has_won(board, opponent)
+	if i_win and not opp_win:
+		return 1.0
+	if opp_win and not i_win:
+		return -1.0
+	if opp_win and i_win:
+		return 0.0
+	
+	if depth <= 0:
+		_evaluate(board, me)
+	
+	var moves := GameState.moves_for(board, me, true) ## FIX
+	if moves.is_empty():
+		return 0.0
+	
+	
+	for move in moves:
+		var new_board := board.clone()
+		var new_move := Move.from_code(move)
+		if new_move.is_drop():
+			new_board.drop(move, me)
+		if new_move.is_pop():
+			new_board.pop(move, me)
+		var new_value := _search(new_board, me, 0, depth-1, skill, 0.0)
+		if turn == me:
+			alpha += new_value
+		else:
+			beta += new_value
+		if alpha > beta:
+			return 0.0
 	
 	return 0.0
 

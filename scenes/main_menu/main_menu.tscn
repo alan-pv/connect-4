@@ -6,10 +6,7 @@
 [ext_resource type="FontFile" uid="uid://c3p1i732xtgpr" path="res://assets/fonts/Chewy-Regular.ttf" id="3_uqeha"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uqeha"]
-polygon = PackedVector2Array(386, 204, 895, 217, 893, 280, 390, 280)
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_wem23"]
-polygon = PackedVector2Array(422, 367, 867, 367, 791, 538, 493, 537)
+polygon = PackedVector2Array(475, 213, 777, 214, 782, 94, 881, 108, 874, 170, 909, 173, 895, 217, 893, 280, 477, 289)
 
 [sub_resource type="RichTextEffect" id="RichTextEffect_jump"]
 script = ExtResource("3_jump")
@@ -28,9 +25,6 @@ script = ExtResource("1_menu")
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=2081527295]
 occluder = SubResource("OccluderPolygon2D_uqeha")
 
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="." unique_id=593243653]
-occluder = SubResource("OccluderPolygon2D_wem23")
-
 [node name="Center" type="CenterContainer" parent="." unique_id=1880228167]
 layout_mode = 1
 anchors_preset = 15
@@ -46,25 +40,27 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="Control" type="Control" parent="Center/Column" unique_id=1089594292]
-custom_minimum_size = Vector2(0, 96)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
 [node name="Title" type="RichTextLabel" parent="Center/Column/Control" unique_id=1715482763]
-custom_minimum_size = Vector2(0, 92)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 0
-offset_top = 8.0
 offset_right = 560.0
-offset_bottom = 100.0
+offset_bottom = 125.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 8
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 50
 theme_override_fonts/normal_font = ExtResource("3_uqeha")
 theme_override_font_sizes/normal_font_size = 96
 bbcode_enabled = true
-text = "[center][jump glow=#f5c518]CONNECT"
+text = "[center][jump glow=#ffffff][color=#f44336]C[color=#ffc107]O[color=#276cf5]N[color=#4caf50f5]N[color=#f06292]E[color=#f44336]C[color=#ffc107]T"
 fit_content = true
 scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 2
 custom_effects = [SubResource("RichTextEffect_jump")]
 
 [node name="Title2" type="RichTextLabel" parent="Center/Column/Control" unique_id=1083265022]
@@ -80,6 +76,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 8
 theme_override_constants/shadow_offset_x = 8
 theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 50
 theme_override_fonts/normal_font = ExtResource("3_uqeha")
 theme_override_font_sizes/normal_font_size = 256
 bbcode_enabled = true

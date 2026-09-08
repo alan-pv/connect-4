@@ -26,9 +26,12 @@ mouse_filter = 2
 [node name="Column" type="VBoxContainer" parent="Center" unique_id=1501067219]
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 45
 
-[node name="Heading" type="RichTextLabel" parent="Center/Column" unique_id=921046031]
+[node name="SeatPanel" type="PanelContainer" parent="Center/Column" unique_id=1248052496]
+layout_mode = 2
+
+[node name="Heading" type="RichTextLabel" parent="Center/Column/SeatPanel" unique_id=921046031]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 24
@@ -37,11 +40,11 @@ text = "[center][wave amp=10 freq=2.5][rainbow sat=0.5 val=1 freq=0.25]Waiting r
 fit_content = true
 scroll_active = false
 
-[node name="TitleRow" type="HBoxContainer" parent="Center/Column" unique_id=2003462071]
+[node name="TitleRow" type="HBoxContainer" parent="Center/Column/SeatPanel" unique_id=2003462071]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="Center/Column/TitleRow" unique_id=1923626728]
+[node name="Title" type="Label" parent="Center/Column/SeatPanel/TitleRow" unique_id=1923626728]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -49,14 +52,11 @@ theme_override_font_sizes/font_size = 30
 text = "Room"
 text_overrun_behavior = 3
 
-[node name="CodeLabel" type="Label" parent="Center/Column/TitleRow" unique_id=1778820341]
+[node name="CodeLabel" type="Label" parent="Center/Column/SeatPanel/TitleRow" unique_id=1778820341]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.69803923, 0.69803923, 0.69803923, 0.78)
 text = "Code ----"
-
-[node name="SeatPanel" type="PanelContainer" parent="Center/Column" unique_id=1248052496]
-layout_mode = 2
 
 [node name="SeatList" type="VBoxContainer" parent="Center/Column/SeatPanel" unique_id=1847140068]
 unique_name_in_owner = true
@@ -66,7 +66,7 @@ theme_override_constants/separation = 8
 [node name="HostBox" type="VBoxContainer" parent="Center/Column" unique_id=1969477744]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 48
 
 [node name="Panel" type="PanelContainer" parent="Center/Column/HostBox" unique_id=1410211975]
 layout_mode = 2

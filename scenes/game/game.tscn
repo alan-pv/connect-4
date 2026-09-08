@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://e53cyaa7svu5"]
 
 [ext_resource type="Script" uid="uid://br87ttu5ablh2" path="res://scenes/game/game.gd" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://dobd4mijsy8a4" path="res://scenes/background/board_background.tscn" id="2_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://c0hyu1eawj6ht" path="res://scenes/game/board.tscn" id="3_board"]
 [ext_resource type="PackedScene" uid="uid://38xd1pcuml7u" path="res://scenes/game/hud.tscn" id="4_hud"]
-[ext_resource type="PackedScene" path="res://scenes/game/pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" uid="uid://m8a0bw0lsger" path="res://scenes/game/pause_menu.tscn" id="5_pause"]
 
 [node name="Game" type="Control" unique_id=1443453542]
 layout_mode = 3
@@ -13,6 +14,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_game")
+
+[node name="BoardBackground" parent="." unique_id=1288605861 instance=ExtResource("2_lfrn8")]
 
 [node name="Stage" type="MarginContainer" parent="." unique_id=1165839151]
 layout_mode = 1
