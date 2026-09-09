@@ -25,7 +25,7 @@ extends Player
 
 ## How far ahead to look. There is no "solve it outright" depth here the way
 ## there was in tic tac toe: with Pop Out on, a position can come back round.
-const MAX_DEPTH := 6
+const MAX_DEPTH := 4
 
 ## Far enough above any heuristic score that a win is never traded for shape.
 const WIN_SCORE := 100000.0
@@ -141,7 +141,8 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 			new_board.drop(new_move.column, my_disc)
 		if new_move.is_pop():
 			new_board.pop(new_move.column, my_disc)
-		var new_value := _search(new_board, my_disc, 0, MAX_DEPTH, INF, -INF, pop_out) #FIX
+		var new_value := _search(new_board, my_disc, 2, MAX_DEPTH-1, INF, -INF, pop_out) #FIX
+		
 		if new_value > value:
 			value = new_value
 			best_move = move
@@ -149,60 +150,18 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 	return best_move ## moves.pick_random() if not moves.is_empty() else -1
 
 
-# ===========================================================================
-# MISSION 2 — look ahead
-# ===========================================================================
-
-## What a position is worth to `me`, with `turn` to move. Alpha-beta minimax.
-##
-##   first, the ways this position is already over:
-##       if I have a completed line and the opponent does not -> a win
-##       if the opponent has one and I do not                 -> a loss
-##       if BOTH of us have one, which a pop can do           -> level, 0.0
-##       score a win with the depth left over, so the bot takes the quickest
-##           win and the slowest loss instead of dawdling
-##
-##   if there is no depth left, stop searching and judge the position with
-##       _evaluate()
-##
-##   work out every legal move for whoever is to move
-##   if there are none, this position is a stalemate: level, 0.0
-##
-##   am I the one to move here? then I am looking for the biggest score;
-##       otherwise the opponent is, and they are looking for the smallest
-##
-##   for each move, best first:
-##       copy the board, play the move, search one ply deeper with the turn
-##           handed over
-##       keep the best score for whoever is choosing
-##       pull alpha up (when maximising) or beta down (when minimising)
-##       if beta has slid under alpha, stop: whoever is above this node in the
-##           tree already has something better and will never come down here
-##
-##   give back the best score
-##
-## The Pop Out trap, and it is a real one: a pop can be undone by the opponent
-## popping the same column straight back, so the search can walk in a circle
-## for as long as you let it. `depth` is the only thing stopping it. Never let
-## a branch recurse without spending one.
-##
-## Godot you may not know yet:
-##   GameRules.has_won(board, disc) -> bool
-##   Disc.opponent(disc) -> int      the other colour
-##   maxf(a, b) / minf(a, b)         float max and min
-##   INF and -INF                    the starting values for alpha and beta
 func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float, pop_out: bool) -> float:
 	var opponent := Disc.opponent(me)
 	var i_win := GameRules.has_won(board, me)
 	var opp_win := GameRules.has_won(board, opponent)
-
+	
+	if i_win and not opp_win:
+		return WIN_SCORE * depth
+	if opp_win and not i_win:
+		return -WIN_SCORE * depth
+	
 	if depth <= 0:
 		return _evaluate(board, me)
-
-	if i_win and not opp_win:
-		return WIN_SCORE*depth
-	if opp_win and not i_win:
-		return -WIN_SCORE/depth
 	if opp_win and i_win:
 		return 0.0
 	
@@ -219,69 +178,36 @@ func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, be
 			new_board.drop(new_move.column, turn)
 		if new_move.is_pop():
 			new_board.pop(new_move.column, turn)
-
 		
 		if my_turn:
-			var new_value := _search(new_board, me, 1+(turn+1)%2, depth-1, 0.0, 0.0, pop_out)
+			var new_value := _search(new_board, opponent, 1, depth-1, 0.0, 0.0, pop_out)
 			best_value = max(best_value, new_value)
 		if not my_turn:
-			var new_value := _search(new_board, opponent,(turn+1)%2, depth-1, 0.0, 0.0, pop_out)
-			print((turn+1)%2)
+			var new_value := _search(new_board, me, 2, depth-1, 0.0, 0.0, pop_out)
 			best_value = min(best_value, new_value)
+	
+		print(best_value)
+		print(board)
 	
 	return best_value
 
 
-# ===========================================================================
-# MISSION 3 — judge a position
-# ===========================================================================
-
-## How promising a position looks when there is no more depth to spend.
-##
-## The shape of it is the same idea as tic tac toe: walk every line of four and
-## ask who could still complete it.
-##
-##   start at zero
-##   for every line GameRules knows about:
-##       count how many of its four slots are mine, and how many are theirs
-##       a line with both colours in it is dead — nobody can ever finish it —
-##           so it is worth nothing to either side and you skip it
-##       a line with only my discs is worth more the closer it is to four:
-##           three is worth far more than two, and two more than one, so the
-##           number you add should grow faster than the count does
-##       a line with only theirs is worth the same, against you
-##
-##   consider weighting the centre column: a disc there sits on more lines
-##       than a disc on the edge, and it is the cheapest positional idea in
-##       the whole game
-##
-##   give back the total
-##
-## Once Pop Out is on, think about whether a line resting on discs the OPPONENT
-## could pop out from under is really worth as much as one that cannot be moved.
-## That is the piece of this evaluation no tic tac toe bot ever needed, and it
-## is where a bot that understands this game beats one that does not.
-##
-## Godot you may not know yet:
-##   GameRules.all_lines() -> Array[PackedInt32Array]   every line of four
-##   GameRules.WIN_LENGTH                               how many make a line
-##   BoardState.column_of(index) -> int
-##   board.cells[index]                                 a Disc.Value
 func _evaluate(board: BoardState, me: int) -> float:
 	var lines := GameRules.all_lines()
+	var opponent := Disc.opponent(me)
 	var total_count := 0.0
 	for line in lines:
 		var count_me := 0.0
 		for i in line:
-			if board.cells[i] != me:
-				count_me -= 1.0/GameRules.WIN_LENGTH
+			if board.cells[i] == opponent:
+				count_me -= 1.0
 			if board.cells[i] == me:
-				count_me += 1.0/GameRules.WIN_LENGTH
+				count_me += 1.0
 			if board.cells[i] != me and count_me > 0:
 				count_me = 0
 				break
 		total_count += count_me
-		
+
 	return total_count
 
 
