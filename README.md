@@ -55,8 +55,22 @@ godot --headless --script res://tests/run_tests.gd
 
 or open `tests/tests.tscn` in the editor and press F6.
 
-## What is not finished
+## Against the bot
 
-`players/bot_player.gd` is deliberately unwritten. It picks a legal move at
-random, so the game is playable, and the four missions in the file replace that
-randomness with a search. `ARCHITECTURE.md` says what each one is for.
+The bot searches with alpha-beta minimax over both kinds of move, so it will
+pop a column open when that is the strongest thing on the board. Its `skill` is
+a value between 0 and 1 rather than a label: at the low end it plays most moves
+at random, at the high end it searches every line it can reach.
+
+## Credits
+
+- **Music** — PizzaDoggy
+- **Sound effects** — *(pending: author to be credited)*
+- **Fonts** — [Chewy](https://fonts.google.com/specimen/Chewy) and
+  [Fredoka](https://fonts.google.com/specimen/Fredoka), SIL Open Font License
+- **Engine** — [Godot](https://godotengine.org) 4.7
+
+## License
+
+The code is MIT, see `LICENSE`. The audio and fonts are the property of their
+respective authors and are covered by their own terms, not by the MIT licence.

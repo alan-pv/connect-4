@@ -2,23 +2,6 @@ class_name RoomChat
 extends Node
 
 ## Carries a ChatPanel's lines over the relay, and narrates who comes and goes.
-##
-## Nothing here is about tic tac toe: it rides inside the same opaque payload
-## every other game message uses, so a new project reuses it by copying this
-## file, chat_panel.gd and chat_dock.gd. One line puts a chat in the corner of
-## any screen that lives inside a room:
-##
-##     RoomChat.spawn(self)
-##
-## Or wire it to a panel you placed yourself:
-##
-##     var chat := RoomChat.new()
-##     add_child(chat)
-##     chat.attach(panel)
-##
-## Names come from the room, never from the message, so nobody can put words in
-## somebody else's mouth. The text itself is not checked at all — the relay is
-## private, and moderating it would mean reading it.
 
 
 const T_CHAT := "chat"
@@ -32,7 +15,6 @@ const HISTORY_LIMIT := 60
 ## Everything said in this room so far. It is static because a panel dies with
 ## its screen and a conversation does not: walking from the lobby into the
 ## match and back out to the results finds the chat where it was left. Emptied
-## when the room is.
 static var _history: Array[Dictionary] = []
 
 var _panel: ChatPanel
@@ -119,12 +101,7 @@ func _on_room_left(reason: String) -> void:
 	_panel.set_input_enabled(false)
 
 
-# ---------------------------------------------------------------------------
 # The conversation
-#
-# Every line goes through here: once into the history that outlives the screen,
-# once onto the panel that is on it right now.
-# ---------------------------------------------------------------------------
 
 func _say(who: String, text: String, color: Color) -> void:
 	_remember({"who": who, "text": text, "color": color})

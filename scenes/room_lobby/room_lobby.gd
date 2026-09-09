@@ -2,10 +2,6 @@ extends Control
 
 ## The waiting room: who is here, the match the host is putting together, the
 ## chat, and the button that freezes it all and sends it to the other player.
-##
-## Only the host decides anything. What they choose is broadcast as a `setup`
-## payload so the guest can see the match they are about to play — a preview and
-## nothing more: what gets played is the config that travels with the start.
 
 
 ## The outline of the ready button, and the tag beside a name in the list.

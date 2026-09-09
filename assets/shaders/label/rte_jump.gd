@@ -4,12 +4,6 @@ class_name RTEJump
 ## RichTextLabel effect: every letter bounces on its own cycle, offset from
 ## the one before it, so the word reads as a wave rather than as one hop. Each
 ## letter picks up an accent colour at the top of its arc.
-##
-## Add an instance of this script to the label's "Custom Effects", turn
-## bbcode_enabled on, and write [jump]TIC TAC TOE[/jump]. Every parameter below
-## can be overridden in the tag:
-##
-##     [jump amp=16 speed=3 stagger=0.18 pause=0.35 glow=1 1 0.4 glow_strength=0.6]
 
 var bbcode := "jump"
 

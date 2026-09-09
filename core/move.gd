@@ -3,15 +3,6 @@ extends RefCounted
 
 ## A turn in Pop Out: either a disc dropped into a column, or your own disc
 ## pulled out from under it.
-##
-## Everything above this class passes moves around as a single int — the
-## `code`. That is not decoration: a Player answers `picked(code)`, and the
-## network relays that same int and nothing else. One number per turn is what
-## keeps `players/`, `net/` and the whole online layer from ever having to know
-## that this game has two kinds of move.
-##
-##     column 0..6      dropping into that column
-##     column 7..13     popping the bottom disc out of column (code - COLUMNS)
 
 
 enum Kind {

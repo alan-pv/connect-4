@@ -3,19 +3,6 @@ extends Node
 
 ## The Connect 4 half of the network: one match, refereed by the host and
 ## replayed identically by the other player.
-##
-## Above it, game.gd only ever sees Players emitting picked(), so the turn loop
-## is the same code offline and online. Below it, Rooms only ever sees opaque
-## dictionaries, so the relay never learns what a board is.
-##
-## The whole networked state of a match is the ordered list of confirmed move
-## codes. Whose turn it is, what the score is and who opens the next round,
-## every client works out for itself from (config, moves): both are transmitted
-## explicitly and nobody decides anything on their own.
-##
-## That a Pop Out turn is two different kinds of move changes nothing here. A
-## move is one int either way — see Move — so this file never learns that
-## popping exists.
 
 
 ## Something worth putting on the HUD for a moment.
@@ -111,7 +98,6 @@ func referees_seat(index: int) -> bool:
 ## Nobody plays until every client is in the game scene and listening. The
 ## referee keeps asking instead of waiting for one announcement, because a
 ## "ready" sent while the referee was still fading out of the lobby is a message
-## nobody was there to hear.
 func wait_for_everyone() -> void:
 	if not is_referee:
 		_send({"t": T_READY})
@@ -182,12 +168,6 @@ func finish() -> void:
 
 
 ## True when this peer is allowed to play this move right now.
-##
-## The only guard on the whole match: the other client trusts whatever comes out
-## of here, and every request off the network was written by a client that may
-## have been modified to ask for anything at all. Popping a column that is not
-## yours is exactly the kind of thing it stops, and `state.can_play()` already
-## knows the rule — this only has to ask it.
 func may_play(from_peer: int, code: int) -> bool:
 	if state == null or state.is_match_over():
 		return false
@@ -272,7 +252,6 @@ func _on_room_updated(_room: Dictionary) -> void:
 ## The seat stays, a bot moves into it. Only the referee changes anything: it
 ## takes ownership of the seat and grows a brain for it, and from then on that
 ## brain asks for moves down the very same path the person did. The other client
-## keeps replaying confirms and never notices the difference.
 func _abandon(seat: int) -> void:
 	_abandoned.append(seat)
 	message.emit("%s left. A bot takes over." % config.player_names[seat])

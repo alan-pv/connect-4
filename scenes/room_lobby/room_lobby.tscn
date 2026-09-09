@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c8ihepwou1vvl"]
+[gd_scene format=3 uid="uid://dg7xm1epmywvv"]
 
 [ext_resource type="Script" uid="uid://bhviec66oix57" path="res://scenes/room_lobby/room_lobby.gd" id="1_lobby"]
 [ext_resource type="PackedScene" uid="uid://dobd4mijsy8a4" path="res://scenes/background/board_background.tscn" id="2_bg"]

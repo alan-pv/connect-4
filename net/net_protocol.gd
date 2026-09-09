@@ -7,21 +7,11 @@ extends Node
 
 ## Bump this whenever a message changes shape. A client that does not match is
 ## turned away with a clear reason instead of failing in some subtle way later.
-##
-## Adding a message counts as changing shape. Godot numbers the RPCs of a script
-## by sorting their names, so one new method renumbers every message that sorts
-## after it: the two ends have to be deployed together, and a mismatch is caught
-## here rather than being decoded as some other message entirely.
 const PROTOCOL_VERSION := 4
 
 const DEFAULT_PORT := 8080
 
 ## How often the relay pokes each peer, and each peer pokes back.
-##
-## A CDN or a reverse proxy closes a WebSocket it believes is idle — Cloudflare
-## does it at around 100 seconds — and a turn-based game is idle for minutes at
-## a time while somebody stares at the board. Nothing above this layer should
-## ever have to know that, so the socket is kept warm from down here.
 const KEEPALIVE_SECONDS := 30.0
 
 ## Per game, not for the whole relay: one popular game must not be able to
@@ -91,13 +81,7 @@ static func hash_password(password: String) -> String:
 	return password.sha256_text()
 
 
-# ---------------------------------------------------------------------------
 # Client -> server
-#
-# Every one of these is annotated once, here, and the two projects override the
-# `_on_*` handler underneath instead of the RPC itself. Re-annotating an
-# override is how the two sides quietly end up with different RPC configs.
-# ---------------------------------------------------------------------------
 
 @rpc("any_peer", "call_remote", "reliable")
 func hello(protocol_version: int, display_name: String, game_id: String) -> void:
@@ -163,7 +147,6 @@ func pong() -> void:
 	_on_pong(_sender())
 
 
-# ---------------------------------------------------------------------------
 # Server -> client
 # ---------------------------------------------------------------------------
 
@@ -203,16 +186,11 @@ func relayed(from_id: int, payload: Dictionary) -> void:
 ## Keeps the socket warm. The relay asks rather than waiting to be asked,
 ## because this is the half that still works when the other end is a browser
 ## tab in the background: a frozen tab runs no code and can answer nothing, but
-## the bytes still arrive and the connection stays open.
-##
-## Deliberately nothing times out on silence. Being unanswered is exactly what a
-## backgrounded tab looks like, and dropping it would undo the point.
 @rpc("authority", "call_remote", "reliable")
 func ping() -> void:
 	_on_ping()
 
 
-# ---------------------------------------------------------------------------
 # Handlers. Each project overrides only the half it implements.
 # ---------------------------------------------------------------------------
 

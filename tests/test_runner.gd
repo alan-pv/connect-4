@@ -2,10 +2,6 @@ class_name TestRunner
 extends RefCounted
 
 ## Runs every suite and prints one line per file.
-##
-## Two ways to run them:
-##   - open tests/tests.tscn in the editor and press F6
-##   - godot --headless --script res://tests/run_tests.gd
 
 
 const SUITES := [

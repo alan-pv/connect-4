@@ -1,21 +1,6 @@
 extends Control
 
 ## Match coordinator: builds everything, wires it together, and drives the loop.
-##
-## The shape of a turn, end to end:
-##
-##   game.gd asks the player for a move   -> player.request_pick(state)
-##   the player answers with a code       -> await player.picked
-##   the rules are applied                -> state.play(code) -> MoveResult
-##   the result is animated               -> await board.drop() / board.pop()
-##   the round ends, or the turn passes
-##
-## Online it is the identical loop: a NetPlayer answers picked() with a move the
-## referee confirmed instead of one it chose, and nothing else changes.
-##
-## Pop Out does not change the shape either. A move is a single int whichever
-## kind it is, so the only place the two are told apart is the one line below
-## that picks which animation to watch.
 
 
 const ROUND_GUARD := 99
@@ -208,7 +193,6 @@ func _animate(result: MoveResult) -> void:
 ## Says what just happened and gives the player a moment to see it. play() does
 ## not hand over the turn when a round ends, so `current_player` is still
 ## whoever moved — which matters, because in Pop Out that is not always the
-## player who won.
 func _end_round(result: MoveResult) -> void:
 	var mover := players[state.current_player].display_name
 	var other := players[state.opponent_of(state.current_player)].display_name

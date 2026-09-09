@@ -4,13 +4,6 @@ extends Control
 ## A volume slider per audio bus, as an overlay that can be dropped on any
 ## screen. It builds itself from the buses the project actually has, so a game
 ## that adds a Music bus gets a Music slider without touching this file:
-##
-##     var panel := AudioSettings.new()
-##     add_child(panel)
-##     panel.open()
-##
-## Reading and writing goes through AudioManager, which owns the levels and
-## remembers them between runs.
 
 
 signal closed
@@ -92,12 +85,7 @@ func close() -> void:
 	closed.emit()
 
 
-# ---------------------------------------------------------------------------
 # Rows
-#
-# Rebuilt on every open rather than kept in sync: the buses are the truth, and
-# reading them again is cheaper than remembering to follow them.
-# ---------------------------------------------------------------------------
 
 func _rebuild_rows() -> void:
 	for child in _rows.get_children():

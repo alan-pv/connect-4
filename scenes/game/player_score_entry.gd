@@ -2,10 +2,6 @@ class_name PlayerScoreEntry
 extends PanelContainer
 
 ## One player on the scoreboard: their colour, their name and their rounds.
-##
-## Whose turn it is is said twice over — the entry brightens and it grows —
-## because the two of them survive different things: brightness reads at a
-## glance across the screen, size reads when the screen is small.
 
 
 const SWATCH_SIZE := 22

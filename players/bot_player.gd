@@ -1,26 +1,10 @@
 class_name BotPlayer
 extends Player
 
-## The machine. THIS FILE IS YOURS.
+## The machine: alpha-beta minimax over drops and pops.
 ##
-## Everything around it is finished and wired: the turn loop asks this seat for
-## a move exactly like it asks a person, and whatever comes out of
-## `choose_move()` is played. Right now it picks at random, so the game is
-## playable from the first run — every mission below replaces a piece of that
-## randomness with a reason.
-##
-## What you are searching, in one paragraph. A position is a BoardState plus
-## whose turn it is. A move is an int (see Move): 0..6 drops into that column,
-## 7..13 pops the bottom disc out of column code - 7. Playing a move on a copy
-## of the board is `board.clone()` and then `drop()` or `pop()` on the copy.
-## `GameRules.has_won(board, disc)` says whether a colour has finished a line.
-## That is the whole vocabulary — the rest is what you do with it.
-##
-## Pop Out is what makes this harder than it looks. A pop changes six slots in
-## one move, it can complete a line for the OTHER colour, and — unlike a drop —
-## it can be undone by the opponent popping the same column back. So the game
-## has no natural end: positions repeat, and a search that assumes the board
-## only ever fills up will loop forever. That is why MAX_DEPTH exists.
+## `skill` decides how often it bothers to think at all, which is what makes
+## the easy presets feel careless rather than slow.
 
 
 ## How far ahead to look. There is no "solve it outright" depth here the way
@@ -34,6 +18,11 @@ const WIN_SCORE := 100000.0
 ## looks at, and in Connect 4 the centre column sits on more winning lines than
 ## any other, so a search that opens there finishes several times sooner.
 const COLUMN_ORDER := [3, 2, 4, 1, 5, 0, 6]
+
+## What a line of four is worth with N discs of one colour in it and none of
+## the other. It climbs steeply on purpose: three in a row is a threat that has
+## to be answered, two is only a shape, and the gap should say so.
+const LINE_SCORE: Array[float] = [0.0, 1.0, 10.0, 50.0, 1000.0]
 
 var think_time: float = 0.45
 
@@ -80,60 +69,18 @@ func cancel_pick() -> void:
 	_pick_token += 1
 
 
-# ===========================================================================
-# MISSION 1 — choose a move
-# ===========================================================================
-
-## Picks the move to play, as a code, or -1 when there is nowhere left.
-##
-##   ask for every legal move on this board for this colour
-##   if there are none:
-##       give back -1
-##
-##   roll a die against `skill`: some of the time, deliberately do not think.
-##       that is what makes the easy presets feel careless instead of slow,
-##       and it is one line, not a second bot
-##
-##   shuffle the moves before scoring them, so two moves the search likes
-##       equally are not always broken the same way and the bot stops opening
-##       every round identically
-##
-##   keep the best move and the best score seen so far
-##   for each move:
-##       copy the board
-##       play the move on the copy
-##       score the copy by handing it to _search(), one ply shallower, with
-##           the turn now belonging to the opponent
-##       if that score beats the best so far, this is the new best move
-##
-##   give back the best move
-##
-## Mind the sign. _search() returns the value of a position FOR YOU, so here
-## you always want the biggest number — even though the position you are
-## handing it is one where the opponent moves next.
-##
-## Godot you may not know yet:
-##   GameState.moves_for(board, disc, pop_out) -> Array[int]
-##                        every legal move code, static, safe to call on a copy
-##   BoardState.clone() -> BoardState        an independent copy
-##   Move.from_code(code) -> Move            .is_drop(), .is_pop(), .column
-##   BoardState.drop(column, disc) -> int    the slot it landed in, or -1
-##   BoardState.pop(column, disc)  -> PackedInt32Array   empty if refused
-##   Array.shuffle()                         shuffles in place, returns nothing
-##   Array.pick_random()                     one element, at random
-##   randf()                                 a float from 0.0 to 1.0
-##   -INF                                    smaller than any real score
 func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 	var moves := GameState.moves_for(board, my_disc, pop_out)
 	if moves.is_empty():
 		return -1
 	
 	if randf() > skill:
-		return -1
+		return moves.pick_random()
 	
 	var value := -INF
 	var best_move := -1
 	moves.shuffle()
+	
 	for move in moves:
 		var new_board := board.clone()
 		var new_move := Move.from_code(move)
@@ -141,13 +88,14 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 			new_board.drop(new_move.column, my_disc)
 		if new_move.is_pop():
 			new_board.pop(new_move.column, my_disc)
-		var new_value := _search(new_board, my_disc, 2, MAX_DEPTH-1, INF, -INF, pop_out) #FIX
+		var new_value := _search(new_board, my_disc, Disc.opponent(my_disc), MAX_DEPTH-1, value, INF, pop_out)
 		
 		if new_value > value:
 			value = new_value
 			best_move = move
 	
-	return best_move ## moves.pick_random() if not moves.is_empty() else -1
+	
+	return best_move
 
 
 func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float, pop_out: bool) -> float:
@@ -159,19 +107,19 @@ func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, be
 		return WIN_SCORE * depth
 	if opp_win and not i_win:
 		return -WIN_SCORE * depth
-	
-	if depth <= 0:
-		return _evaluate(board, me)
 	if opp_win and i_win:
 		return 0.0
+	if depth <= 0:
+		return _evaluate(board, me)
 	
-	var moves := GameState.moves_for(board, turn, pop_out)
+	var moves := _ordered_moves(board, turn, pop_out)
 	if moves.is_empty():
 		return 0.0
 	
 	var my_turn := turn == me
 	var best_value := -INF if my_turn else INF
-	for move in _ordered_moves(board, turn, pop_out):
+	
+	for move in moves:
 		var new_board := board.clone()
 		var new_move := Move.from_code(move)
 		if new_move.is_drop():
@@ -180,62 +128,55 @@ func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, be
 			new_board.pop(new_move.column, turn)
 		
 		if my_turn:
-			var new_value := _search(new_board, opponent, 1, depth-1, 0.0, 0.0, pop_out)
+			var new_value := _search(new_board, me, Disc.opponent(turn), depth-1, alpha, beta, pop_out)
 			best_value = max(best_value, new_value)
+			alpha = max(alpha, new_value)
+			if beta <= alpha:
+				break
+
 		if not my_turn:
-			var new_value := _search(new_board, me, 2, depth-1, 0.0, 0.0, pop_out)
+			var new_value := _search(new_board, me, Disc.opponent(turn), depth-1, alpha, beta, pop_out)
 			best_value = min(best_value, new_value)
-	
-		print(best_value)
-		print(board)
-	
+			beta = min(beta, new_value)
+			if beta <= alpha:
+				break
+
 	return best_value
 
 
 func _evaluate(board: BoardState, me: int) -> float:
-	var lines := GameRules.all_lines()
 	var opponent := Disc.opponent(me)
-	var total_count := 0.0
-	for line in lines:
-		var count_me := 0.0
-		for i in line:
-			if board.cells[i] == opponent:
-				count_me -= 1.0
-			if board.cells[i] == me:
-				count_me += 1.0
-			if board.cells[i] != me and count_me > 0:
-				count_me = 0
-				break
-		total_count += count_me
+	var total := 0.0
+	for line: PackedInt32Array in GameRules.all_lines():
+		var mine := 0
+		var theirs := 0
+		for index in line:
+			if board.cells[index] == me:
+				mine += 1
+			elif board.cells[index] == opponent:
+				theirs += 1
+		# A line both colours have touched is dead: nobody can ever finish it.
+		if mine > 0 and theirs > 0:
+			continue
+		if mine > 0:
+			total += LINE_SCORE[mine]
+		elif theirs > 0:
+			total -= LINE_SCORE[theirs]
+	return total
 
-	return total_count
 
-
-# ===========================================================================
-# MISSION 4 — order the moves
-# ===========================================================================
-
-## The legal moves, most promising first, so alpha-beta has something good to
-## prune against from the start.
-##
-##   walk COLUMN_ORDER rather than 0..6
-##   for each of those columns, take the drop if it is legal
-##   then, if pops are allowed, the pops in the same order
-##
-## Whether pops belong before or after the drops is worth measuring rather than
-## guessing: in most positions a drop is the move, but a pop that completes a
-## line is the strongest move on the board.
-##
-## Godot you may not know yet:
-##   BoardState.can_drop(column) -> bool
-##   BoardState.can_pop(column, disc) -> bool
-##   Move.drop_code(column) / Move.pop_code(column) -> int
 func _ordered_moves(board: BoardState, turn: int, pop_out: bool) -> Array[int]:
-	# TODO(you) — mission 4. Until then, legal but in no useful order.
-	return GameState.moves_for(board, turn, pop_out)
+	var ordered: Array[int] = []
+	for column: int in COLUMN_ORDER:
+		if board.can_drop(column):
+			ordered.append(Move.drop_code(column))
+	if pop_out:
+		for column: int in COLUMN_ORDER:
+			if board.can_pop(column, turn):
+				ordered.append(Move.pop_code(column))
+	return ordered
 
 
-# ---------------------------------------------------------------------------
 # The safety net. Not part of any mission: it is what keeps a half-written bot
 # from hanging the match.
 # ---------------------------------------------------------------------------

@@ -4,18 +4,6 @@ extends VBoxContainer
 ## The board on screen: forty-two slots, a row of buttons above them to drop
 ## into and a row below to pop out of. It knows nothing about turns, rules or
 ## scores — it translates move codes into things you can watch, and clicks back
-## into move codes.
-##
-##     game.gd -> board.drop(result) / board.pop(result)     something to watch
-##     board   -> move_requested(code)                       somebody clicked
-##
-## Which buttons are live is not decided here either. `show_moves(state)` asks
-## the state what is legal and lights exactly those, so the one place that
-## knows the rules of Pop Out stays the one place that knows them.
-##
-## A VBoxContainer rather than a bare Control so the three rows report one
-## minimum size upwards: the screen can then simply centre it, and hiding the
-## pop row closes the gap it leaves behind instead of stranding it.
 
 
 ## Somebody asked to play a move. Whether they are allowed to is the turn
@@ -96,7 +84,6 @@ func _build_column_button(glyph: String, tooltip: String) -> Button:
 	return button
 
 
-# ---------------------------------------------------------------------------
 # What is on the board
 # ---------------------------------------------------------------------------
 
@@ -120,7 +107,6 @@ func clear_board() -> void:
 		slot.set_disc(Disc.Value.NONE)
 
 
-# ---------------------------------------------------------------------------
 # What can be clicked
 # ---------------------------------------------------------------------------
 
@@ -149,12 +135,7 @@ func show_moves(state: GameState) -> void:
 		slot.set_dim(false)
 
 
-# ---------------------------------------------------------------------------
 # Animation
-#
-# Both of these are awaited by the turn loop, so the next move cannot be asked
-# for until the last one has finished being watched.
-# ---------------------------------------------------------------------------
 
 ## A disc falling into a column.
 func drop(result: MoveResult) -> void:
@@ -169,10 +150,6 @@ func drop(result: MoveResult) -> void:
 
 
 ## A disc leaving from the bottom, and the column collapsing into the gap.
-##
-## The slots are still showing the board as it was before the pop, which is
-## what makes this possible: the colours that have to fall are read off the
-## screen rather than recomputed.
 func pop(result: MoveResult) -> void:
 	var bottom := get_slot(result.index)
 	if bottom == null:
@@ -229,13 +206,7 @@ func highlight(slots: PackedInt32Array) -> void:
 			slot.play_win()
 
 
-# ---------------------------------------------------------------------------
 # The preview
-#
-# Where the disc you are about to drop would end up. It is worked out from the
-# slots themselves rather than from the state, so the board stays a thing that
-# can be looked at without being told anything.
-# ---------------------------------------------------------------------------
 
 func _on_drop_hovered(column: int) -> void:
 	_clear_preview()

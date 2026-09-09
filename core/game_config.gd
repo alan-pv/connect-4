@@ -2,9 +2,6 @@ class_name GameConfig
 extends Resource
 
 ## The settings of a match and their validation.
-##
-## Built by the setup screen or by the room lobby, parked in GameSettings, read
-## by game.gd. It is a Resource, so it can also be edited in the inspector.
 
 
 const PLAYER_COUNT := 2

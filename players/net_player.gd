@@ -2,12 +2,6 @@ class_name NetPlayer
 extends Player
 
 ## A seat in an online match.
-##
-## Every seat is one of these on every client: the one you own, the one the
-## other player owns, and any seat a bot took over. What changes from client to
-## client is only who is allowed to *ask* for a move — the move itself always
-## arrives as a confirm from the referee, which is why the turn loop in game.gd
-## never learns that the match is online.
 
 
 var net_match: OnlineMatch

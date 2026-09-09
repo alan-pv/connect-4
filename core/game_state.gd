@@ -3,10 +3,6 @@ extends RefCounted
 
 ## The source of truth for the match: the board, whose turn it is and how many
 ## rounds each player has won.
-##
-## It announces the two things the HUD cares about and nothing else. The board
-## on screen is not driven by these signals: game.gd animates it from the
-## MoveResult, so it can await one animation before starting the next.
 
 
 signal turn_changed(player_index: int)
@@ -38,7 +34,6 @@ func setup(p_config: GameConfig) -> void:
 	round_number = 0
 
 
-# ---------------------------------------------------------------------------
 # Who is who
 # ---------------------------------------------------------------------------
 
@@ -77,12 +72,7 @@ func is_match_over() -> bool:
 	return false
 
 
-# ---------------------------------------------------------------------------
 # Legality
-#
-# Everything here works in move codes, because that is the one number a Player
-# answers with and the one number the network carries.
-# ---------------------------------------------------------------------------
 
 ## True when the current player may play that move right now.
 func can_play(code: int) -> bool:
@@ -117,15 +107,10 @@ static func moves_for(p_board: BoardState, disc: int, pop_out: bool) -> Array[in
 	return codes
 
 
-# ---------------------------------------------------------------------------
 # Playing
 # ---------------------------------------------------------------------------
 
 ## Plays the current player's move and reports what happened.
-##
-## The turn is not handed over when the round ends: game.gd reads
-## current_player afterwards to know who just moved, and start_round() decides
-## who opens the next one.
 func play(code: int) -> MoveResult:
 	var result := MoveResult.new()
 	if not can_play(code):

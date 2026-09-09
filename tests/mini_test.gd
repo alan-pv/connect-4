@@ -2,12 +2,6 @@ class_name MiniTest
 extends RefCounted
 
 ## A test framework in about forty lines. No plugin, no dependencies.
-##
-## To add a suite: make a file that extends MiniTest, give it methods whose
-## names start with test_, and list the file in tests/test_runner.gd.
-##
-## The core is testable at all because it never mentions a node type. The day a
-## `Control` sneaks into core/, these files stop being runnable.
 
 
 var failures: PackedStringArray = PackedStringArray()

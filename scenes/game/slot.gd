@@ -3,18 +3,6 @@ extends Control
 
 ## One hole in the board. It owns nothing and decides nothing: the disc drawn
 ## here is a copy of what BoardState holds, never a second source of truth.
-##
-## The whole thing is two rounded rectangles and no art at all. The slot itself
-## is a square of board colour; the disc inside it is a square with its corners
-## rounded to half its side, which is a circle. An empty hole is that same
-## circle painted the colour of the background, so the board reads as a sheet
-## with holes punched in it rather than as a grid with gaps.
-##
-## Two things move independently, so they each get their own channel and never
-## fight over one another:
-##
-##   %Pivot     where the disc is, which is how falling is drawn
-##   %Disc      what colour it is and how big, which is how landing is drawn
 
 
 const COLOR_RED := Color("f44336")
@@ -75,12 +63,7 @@ func setup(p_index: int) -> void:
 	index = p_index
 
 
-# ---------------------------------------------------------------------------
 # Building
-#
-# In code rather than in the scene: forty-two of these are made at runtime, and
-# a StyleBoxFlat shared between them would let one slot repaint every other.
-# ---------------------------------------------------------------------------
 
 func _build() -> void:
 	_frame_box = StyleBoxFlat.new()
@@ -126,7 +109,6 @@ func pitch() -> float:
 	return size.y
 
 
-# ---------------------------------------------------------------------------
 # What is in the hole
 # ---------------------------------------------------------------------------
 
@@ -171,12 +153,7 @@ func _repaint() -> void:
 	_disc_box.set_border_width_all(0)
 
 
-# ---------------------------------------------------------------------------
 # Animation
-#
-# Every one of these is awaited by the board, which is awaited by the turn
-# loop, so a move is not over until it has finished being watched.
-# ---------------------------------------------------------------------------
 
 ## The disc arriving from above. `rows` is how many rows it fell through, so a
 ## disc into an empty column takes visibly longer than one onto a full pile.

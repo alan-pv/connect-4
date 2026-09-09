@@ -2,8 +2,6 @@ extends Node
 
 ## Autoload "Rooms": the lobby seen from a client. Browsing, creating, joining
 ## and the state of the room you are sitting in.
-##
-## Game-agnostic on purpose: it carries a room and its members, never a board.
 
 
 signal list_updated(rooms: Array)

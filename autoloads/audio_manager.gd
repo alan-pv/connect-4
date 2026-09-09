@@ -2,16 +2,6 @@ extends Node
 
 ## Pool of players for firing sound effects from any scene, the background
 ## music, and the one place that knows how loud anything is.
-##
-## Volume lives on the audio buses rather than on each player, so a slider moved
-## in the middle of a sound is heard immediately and nothing has to be told
-## about it. What the player chose is written to disk here and read back at
-## boot, long before any settings screen exists.
-##
-## Nothing above this file ever has to call it. Music is a convention rather
-## than configuration: drop a file where MUSIC_PATHS says and it plays, in every
-## scene, for the whole run. Reusing all of this in another project is copying
-## this file and the bus layout beside it, and dropping in a music.ogg.
 
 
 const POOL_SIZE := 8
@@ -88,12 +78,7 @@ func play_sfx(path: String, pitch_variation: float = 0.08) -> void:
 	player.play()
 
 
-# ---------------------------------------------------------------------------
 # Music
-#
-# One track, started at boot and never stopped. Volume is the Music bus, so the
-# settings panel already controls it and nothing here reads a slider.
-# ---------------------------------------------------------------------------
 
 func find_music() -> String:
 	for path in MUSIC_PATHS:
@@ -135,7 +120,6 @@ func is_music_playing() -> bool:
 ## The import flag on the file is not to be trusted — it defaults to off, and a
 ## project that forgets it gets one silent minute and then nothing. Whether the
 ## stream can loop by itself is asked here instead, and if it cannot, the player
-## simply starts it again when it ends.
 func _loop_forever(stream: AudioStream) -> void:
 	if stream is AudioStreamOggVorbis or stream is AudioStreamMP3:
 		stream.set("loop", true)
@@ -155,12 +139,7 @@ func _fade_music_to(volume_db: float, seconds: float) -> void:
 	_music_tween.tween_property(_music, "volume_db", volume_db, maxf(seconds, 0.01))
 
 
-# ---------------------------------------------------------------------------
 # Volume
-#
-# Everything outside works in 0..1, because that is what a slider is. Decibels
-# stay in here, where the conversion happens once.
-# ---------------------------------------------------------------------------
 
 func bus_volume(bus_name: String) -> float:
 	var index := AudioServer.get_bus_index(bus_name)
@@ -198,7 +177,6 @@ func bus_names() -> PackedStringArray:
 	return names
 
 
-# ---------------------------------------------------------------------------
 # Remembering it
 # ---------------------------------------------------------------------------
 
@@ -214,11 +192,6 @@ func save_settings() -> void:
 
 ## A missing file is the normal first run, not a problem: the buses keep the
 ## levels the layout was saved with.
-##
-## Only keys the file actually holds are applied. A bus added to the project
-## after somebody already saved their settings — a Music bus in a game that
-## shipped without one — would otherwise be dragged to full volume by a file
-## that has never heard of it, instead of keeping the level it was mixed at.
 func load_settings() -> void:
 	var file := ConfigFile.new()
 	if file.load(SETTINGS_PATH) != OK:

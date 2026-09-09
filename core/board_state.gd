@@ -2,22 +2,6 @@ class_name BoardState
 extends RefCounted
 
 ## The seven by six grid and the gravity that holds it together.
-##
-## Pure data, and cheap on purpose: the bot clones it many times per turn.
-##
-## Row 0 is the TOP row, so a slot's index is the same number as its place in
-## the grid on screen, counted left to right and top to bottom:
-##
-##      0  1  2  3  4  5  6      <- discs come in here
-##      7  8  9 10 11 12 13
-##     14 15 16 17 18 19 20
-##     21 22 23 24 25 26 27
-##     28 29 30 31 32 33 34
-##     35 36 37 38 39 40 41      <- and Pop Out takes them out here
-##
-## The one invariant everything else leans on: **a column is always packed
-## against the bottom.** There is never a hole under a disc. Both moves keep it
-## that way, which is why `height_of()` can just count.
 
 
 const COLUMNS := 7
@@ -38,7 +22,6 @@ func reset() -> void:
 	cells.fill(Disc.Value.NONE)
 
 
-# ---------------------------------------------------------------------------
 # Coordinates
 # ---------------------------------------------------------------------------
 
@@ -81,7 +64,6 @@ static func column_indices(column: int) -> PackedInt32Array:
 	return out
 
 
-# ---------------------------------------------------------------------------
 # Reading
 # ---------------------------------------------------------------------------
 
@@ -156,11 +138,7 @@ func is_full() -> bool:
 	return true
 
 
-# ---------------------------------------------------------------------------
 # Writing
-#
-# Both of these keep the invariant: no holes under a disc, ever.
-# ---------------------------------------------------------------------------
 
 ## Drops a disc into a column and answers the slot it landed in, or -1 when the
 ## column was full.
@@ -176,11 +154,6 @@ func drop(column: int, disc: int) -> int:
 ## Takes the bottom disc out of a column and lets everything above it fall one
 ## row. Answers the slots whose contents moved, top first, so the board knows
 ## what to animate; an empty array means the pop was refused.
-##
-## The list holds the slots a disc moved *out of*; each of those discs is now
-## one row further down. Empty slots above the pile are not in it — nothing
-## moved out of them — and the bottom row never is either, because the disc
-## that was there is the one that left.
 func pop(column: int, disc: int) -> PackedInt32Array:
 	var moved := PackedInt32Array()
 	if not can_pop(column, disc):

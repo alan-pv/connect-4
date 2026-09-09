@@ -4,9 +4,6 @@ extends PanelContainer
 ## A chat log and a box to type in. Knows nothing about networks: it emits what
 ## was typed and shows whatever it is told to show, so the same widget serves a
 ## lobby, a match or a single-player tutorial.
-##
-## Pair it with something that carries the lines around — RoomChat does it over
-## the relay — or drive it by hand from anywhere.
 
 
 ## Somebody pressed Enter or Send. Already trimmed and cut to `max_length`.
@@ -81,7 +78,6 @@ func _build() -> void:
 	row.add_child(_send_button)
 
 
-# ---------------------------------------------------------------------------
 # Showing lines
 # ---------------------------------------------------------------------------
 

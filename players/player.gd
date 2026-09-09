@@ -2,15 +2,6 @@ class_name Player
 extends Node
 
 ## Common contract for anyone who can take a turn.
-##
-##     game.gd asks:       request_pick(state)
-##     the player answers: picked(code)
-##
-## That is the whole conversation, which is why there is not one `if is_bot:`
-## anywhere in this project.
-##
-## The code is a move as a single int — see Move. A human, a bot and a seat on
-## the other side of the world all answer with the same kind of number.
 
 
 signal picked(code: int)

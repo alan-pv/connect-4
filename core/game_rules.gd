@@ -25,11 +25,6 @@ static func all_lines() -> Array[PackedInt32Array]:
 
 
 ## The lines that pass through one slot, as plain PackedInt32Arrays.
-##
-## Untyped on the way out on purpose: a Dictionary stores Variant, so a typed
-## array put into one does not come back typed, and promising
-## `Array[PackedInt32Array]` here would fail on the return rather than at the
-## call. Read it with `for line: PackedInt32Array in ...`.
 static func lines_through(index: int) -> Array:
 	if _lines.is_empty():
 		_build()
@@ -77,10 +72,6 @@ static func has_won(board: BoardState, disc: int) -> bool:
 
 
 ## Whoever owns a line right now, or NONE.
-##
-## Careful with this one in Pop Out: a pop can complete a line for *both*
-## players at the same time, and then there is no single winner. Ask
-## `is_shared_win()` before trusting the answer.
 static func winner(board: BoardState) -> int:
 	var red := has_won(board, Disc.Value.RED)
 	var yellow := has_won(board, Disc.Value.YELLOW)
@@ -96,8 +87,6 @@ static func winner(board: BoardState) -> int:
 ## The Pop Out corner case, and the reason this game needs a rule tic tac toe
 ## never did: pulling a disc out from under a column drops six slots at once,
 ## and the four it completes may not all be yours. Nobody takes a round they
-## only won by handing the other player one at the same instant, so it is a
-## draw — the same verdict either player would want if the colours were swapped.
 static func is_shared_win(board: BoardState) -> bool:
 	return has_won(board, Disc.Value.RED) and has_won(board, Disc.Value.YELLOW)
 

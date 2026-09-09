@@ -3,17 +3,6 @@ extends Control
 
 ## The chat as a window in the bottom left corner: a bar you click to fold it
 ## away, and a red dot on that bar when somebody spoke while it was folded.
-##
-## It is a ChatPanel with somewhere to live, and it knows about networks exactly
-## as much as the panel does — nothing:
-##
-##     var dock := ChatDock.new()
-##     add_child(dock)
-##     dock.panel.push_line("Somebody", "hello")
-##
-## Inside a room, `RoomChat.spawn(self)` builds one of these and wires it to the
-## relay in a single line. It floats over whatever the screen already is, so no
-## layout has to make room for it.
 
 
 signal toggled(is_open: bool)
@@ -78,7 +67,6 @@ func _ready() -> void:
 	_apply(start_open, false)
 
 
-# ---------------------------------------------------------------------------
 # Asking and telling
 # ---------------------------------------------------------------------------
 
@@ -111,7 +99,6 @@ func clear_unread() -> void:
 	_show_badge(false)
 
 
-# ---------------------------------------------------------------------------
 # Building
 # ---------------------------------------------------------------------------
 
@@ -194,7 +181,6 @@ func _build_badge() -> Panel:
 	return dot
 
 
-# ---------------------------------------------------------------------------
 # Folding
 # ---------------------------------------------------------------------------
 
@@ -243,7 +229,6 @@ func _panel_height() -> float:
 	return maxf(panel.get_combined_minimum_size().y, float(log_height))
 
 
-# ---------------------------------------------------------------------------
 # The dot
 # ---------------------------------------------------------------------------
 
