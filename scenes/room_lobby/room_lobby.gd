@@ -17,7 +17,7 @@ const READY_STATES := ["normal", "hover", "pressed", "focus"]
 @onready var _code_label: Label = %CodeLabel
 @onready var _seat_list: VBoxContainer = %SeatList
 @onready var _host_box: VBoxContainer = %HostBox
-@onready var _pop_out_toggle: CheckButton = %PopOutToggle
+@onready var _infinite_toggle: CheckButton = %InfiniteToggle
 @onready var _rounds_spin: SpinBox = %RoundsSpin
 @onready var _summary_label: Label = %SummaryLabel
 @onready var _status_label: Label = %StatusLabel
@@ -27,7 +27,8 @@ const READY_STATES := ["normal", "hover", "pressed", "focus"]
 
 ## The match as this client understands it. The host fills it from its own
 ## controls; the guest from the setup the host sends.
-var _pop_out: bool = true
+var _pop_out: bool = false
+var _marks: int = 3
 var _rounds: int = 3
 
 ## True from the moment we hand the match over, so a room update arriving during
@@ -41,13 +42,13 @@ func _ready() -> void:
 		return
 
 	# The whole chat, in the corner, wired to the relay: three files that have
-	# never heard of Connect 4.
+	# never heard of tic tac toe.
 	RoomChat.spawn(self)
 
 	_leave_button.pressed.connect(_on_leave_pressed)
 	_ready_button.toggled.connect(_on_ready_toggled)
 	_start_button.pressed.connect(_on_start_pressed)
-	_pop_out_toggle.toggled.connect(func(_on: bool) -> void: _refresh())
+	_infinite_toggle.toggled.connect(func(_on: bool) -> void: _refresh())
 	_rounds_spin.value_changed.connect(func(_v: float) -> void: _refresh())
 
 	Rooms.updated.connect(func(_room: Dictionary) -> void: _refresh())
@@ -77,7 +78,7 @@ func _seed_from_last_match() -> void:
 	GameSettings.last_online_setup = {}
 	if last.is_empty():
 		return
-	_pop_out_toggle.button_pressed = bool(last.get("pop", true))
+	_infinite_toggle.button_pressed = bool(last.get("pop_out", false))
 	_rounds_spin.value = int(last.get("rounds", 3))
 
 
@@ -96,7 +97,7 @@ func _refresh() -> void:
 	_code_label.text = "Code %s" % str(room.get("id", "—"))
 
 	if host:
-		_pop_out = _pop_out_toggle.button_pressed
+		_pop_out = _infinite_toggle.button_pressed
 		_rounds = int(_rounds_spin.value)
 
 	_rebuild_seat_list(members)
@@ -184,7 +185,6 @@ func _build_kick_button(peer_id: int, seat_name: String) -> Button:
 	var button := Button.new()
 	button.text = "Kick"
 	button.tooltip_text = "Remove %s from the room" % seat_name
-	button.theme_type_variation = &"RedButton"
 	button.add_theme_font_size_override("font_size", 14)
 	button.pressed.connect(func() -> void: Rooms.kick(peer_id))
 	return button
@@ -249,7 +249,8 @@ func _build_config() -> GameConfig:
 func _broadcast_setup() -> void:
 	Rooms.send({
 		"t": OnlineMatch.T_SETUP,
-		"pop": _pop_out,
+		"pop_out": _pop_out,
+		"marks": _marks,
 		"rounds": _rounds,
 	})
 
@@ -287,10 +288,10 @@ func _on_payload(from_id: int, payload: Dictionary) -> void:
 
 	match kind:
 		OnlineMatch.T_SETUP:
-			_pop_out = bool(payload.get("pop", true))
-			_rounds = clampi(int(payload.get("rounds", 3)),
-				GameConfig.MIN_ROUNDS, GameConfig.MAX_ROUNDS)
-			_pop_out_toggle.button_pressed = _pop_out
+			_pop_out = bool(payload.get("pop_out", false))
+			_marks = clampi(int(payload.get("marks", 3)), 2, 4)
+			_rounds = clampi(int(payload.get("rounds", 3)), 1, 9)
+			_infinite_toggle.button_pressed = _pop_out
 			_rounds_spin.value = _rounds
 			_refresh()
 		OnlineMatch.T_START:

@@ -128,7 +128,7 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 	if moves.is_empty():
 		return -1
 	
-	if randf() < skill:
+	if randf() > skill:
 		return -1
 	
 	var value := -INF
@@ -138,10 +138,10 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 		var new_board := board.clone()
 		var new_move := Move.from_code(move)
 		if new_move.is_drop():
-			new_board.drop(move, my_disc)
+			new_board.drop(new_move.column, my_disc)
 		if new_move.is_pop():
-			new_board.pop(move, my_disc)
-		var new_value := _search(new_board, my_disc, 0, MAX_DEPTH, skill, 0.0) #FIX
+			new_board.pop(new_move.column, my_disc)
+		var new_value := _search(new_board, my_disc, 0, MAX_DEPTH, INF, -INF, pop_out) #FIX
 		if new_value > value:
 			value = new_value
 			best_move = move
@@ -191,41 +191,45 @@ func choose_move(board: BoardState, my_disc: int, pop_out: bool) -> int:
 ##   Disc.opponent(disc) -> int      the other colour
 ##   maxf(a, b) / minf(a, b)         float max and min
 ##   INF and -INF                    the starting values for alpha and beta
-func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float) -> float:
+func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, beta: float, pop_out: bool) -> float:
 	var opponent := Disc.opponent(me)
 	var i_win := GameRules.has_won(board, me)
 	var opp_win := GameRules.has_won(board, opponent)
+
+	if depth <= 0:
+		return _evaluate(board, me)
+
 	if i_win and not opp_win:
-		return 1.0
+		return WIN_SCORE*depth
 	if opp_win and not i_win:
-		return -1.0
+		return -WIN_SCORE/depth
 	if opp_win and i_win:
 		return 0.0
 	
-	if depth <= 0:
-		_evaluate(board, me)
-	
-	var moves := GameState.moves_for(board, me, true) ## FIX
+	var moves := GameState.moves_for(board, turn, pop_out)
 	if moves.is_empty():
 		return 0.0
 	
-	
-	for move in moves:
+	var my_turn := turn == me
+	var best_value := -INF if my_turn else INF
+	for move in _ordered_moves(board, turn, pop_out):
 		var new_board := board.clone()
 		var new_move := Move.from_code(move)
 		if new_move.is_drop():
-			new_board.drop(move, me)
+			new_board.drop(new_move.column, turn)
 		if new_move.is_pop():
-			new_board.pop(move, me)
-		var new_value := _search(new_board, me, 0, depth-1, skill, 0.0)
-		if turn == me:
-			alpha += new_value
-		else:
-			beta += new_value
-		if alpha > beta:
-			return 0.0
+			new_board.pop(new_move.column, turn)
+
+		
+		if my_turn:
+			var new_value := _search(new_board, me, 1+(turn+1)%2, depth-1, 0.0, 0.0, pop_out)
+			best_value = max(best_value, new_value)
+		if not my_turn:
+			var new_value := _search(new_board, opponent,(turn+1)%2, depth-1, 0.0, 0.0, pop_out)
+			print((turn+1)%2)
+			best_value = min(best_value, new_value)
 	
-	return 0.0
+	return best_value
 
 
 # ===========================================================================
@@ -264,8 +268,21 @@ func _search(board: BoardState, me: int, turn: int, depth: int, alpha: float, be
 ##   BoardState.column_of(index) -> int
 ##   board.cells[index]                                 a Disc.Value
 func _evaluate(board: BoardState, me: int) -> float:
-	# TODO(you) — mission 3.
-	return 0.0
+	var lines := GameRules.all_lines()
+	var total_count := 0.0
+	for line in lines:
+		var count_me := 0.0
+		for i in line:
+			if board.cells[i] != me:
+				count_me -= 1.0/GameRules.WIN_LENGTH
+			if board.cells[i] == me:
+				count_me += 1.0/GameRules.WIN_LENGTH
+			if board.cells[i] != me and count_me > 0:
+				count_me = 0
+				break
+		total_count += count_me
+		
+	return total_count
 
 
 # ===========================================================================
