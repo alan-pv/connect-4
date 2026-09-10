@@ -89,7 +89,7 @@ collision_use_scale = true
 [node name="BoardBackground" type="Node2D" unique_id=1288605861]
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=822158208]
-modulate = Color(0.006955856, 0.50943613, 0.9065821, 1)
+modulate = Color(0.007843138, 0.50980395, 0.90588236, 1)
 texture_filter = 2
 material = SubResource("ShaderMaterial_88qey")
 custom_minimum_size = Vector2(1280, 720)

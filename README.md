@@ -5,6 +5,8 @@ Four in a row, with the twist that lets you take a disc back out.
 Built in Godot 4.7. Two players on one device, against a bot, or against
 somebody else over the internet.
 
+![A match against the bot, from setting it up to the discs going in](docs/gameplay.gif)
+
 ## The twist
 
 The classic game only ever adds discs. Pop Out lets a turn be spent the other
@@ -32,6 +34,13 @@ button shows you where the disc would land.
 Whoever wins enough rounds takes the match. Players take turns opening, so
 nobody keeps the first-move advantage.
 
+## Against the bot
+
+The bot searches with alpha-beta minimax over both kinds of move, so it will
+pop a column open when that is the strongest thing on the board. Its `skill` is
+a value between 0 and 1 rather than a label: at the low end it plays most moves
+at random, at the high end it searches every line it can reach.
+
 ## Online
 
 Rooms are hosted on a small relay that never learns what a board is: every
@@ -42,6 +51,14 @@ checked there before it happens on anybody's screen.
 If somebody leaves mid-match a bot takes their seat and the match carries on.
 There is a chat in the corner of the lobby, the match and the results screen,
 and it remembers what was said while you walk between them.
+
+## Screens
+
+| | |
+|---|---|
+| ![Main menu](docs/menu.png) | **Main menu.** Local or online, the how-to, and the audio settings. The tagline under the logo is the whole game in five words: drop one, or pull one out. |
+| ![A match against the bot](docs/match-vs-bot.png) | **A match against the bot.** The badge top left counts the rounds and shows whether Pop Out is on. The row of buttons above the board drops a disc in; the row below pulls one out, and it only lights up over a column whose bottom disc is yours. |
+| ![An online room](docs/online-room.png) | **An online room.** The host owns the room code, the Pop Out toggle and the length of the match, and starts once the second seat fills. The chat in the corner follows you into the match and the results screen. |
 
 ## Running it
 
@@ -55,19 +72,11 @@ godot --headless --script res://tests/run_tests.gd
 
 or open `tests/tests.tscn` in the editor and press F6.
 
-## Against the bot
-
-The bot searches with alpha-beta minimax over both kinds of move, so it will
-pop a column open when that is the strongest thing on the board. Its `skill` is
-a value between 0 and 1 rather than a label: at the low end it plays most moves
-at random, at the high end it searches every line it can reach.
-
 ## Credits
 
-- **Music** — PizzaDoggy
-- **Sound effects** — *(pending: author to be credited)*
-- **Fonts** — [Chewy](https://fonts.google.com/specimen/Chewy) and
-  [Fredoka](https://fonts.google.com/specimen/Fredoka), SIL Open Font License
+- **Music** — [PizzaDoggy](https://pizzadoggy.itch.io/)
+- **Sound effects** — RPG Essentials SFX by [Leohpaz](https://leohpaz.itch.io/rpg-essentials-sfx-free)
+- **Font** — [Chewy](https://fonts.google.com/specimen/Chewy), SIL Open Font License
 - **Engine** — [Godot](https://godotengine.org) 4.7
 
 ## License
